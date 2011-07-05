@@ -11,11 +11,11 @@ RSpec::Matchers.define :be_json_eql do |expected_json|
   end
 
   chain :excluding do |*keys|
-    excluded_keys.add(*keys)
+    excluded_keys.add(*keys.map(&:to_s))
   end
 
   chain :including do |*keys|
-    excluded_keys.subtract(keys)
+    excluded_keys.subtract(keys.map(&:to_s))
   end
 
   failure_message_for_should do
