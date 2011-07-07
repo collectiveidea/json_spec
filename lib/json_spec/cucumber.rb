@@ -1,3 +1,5 @@
+require File.expand_path("../../json_spec", __FILE__)
+
 World(JsonSpec::Helpers)
 
 Then /^the (?:JSON|json)(?: response)? should have "(.*)"$/ do |path|
