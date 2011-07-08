@@ -29,6 +29,12 @@ RSpec::Matchers.define :be_json_eql do |expected_json|
     message
   end
 
+  failure_message_for_should_not do
+    message = "Expected inequivalent JSON"
+    message << %( at path "#{@path}") if @path
+    message
+  end
+
   def scrub(json, path = nil)
     ruby = path ? ruby_at_json_path(json, path) : parse_json_value(json)
     pretty_json_value(exclude_keys(ruby)).chomp + "\n"
@@ -71,6 +77,10 @@ RSpec::Matchers.define :have_json_path do |path|
   failure_message_for_should do
     %(Expected JSON path "#{path}")
   end
+
+  failure_message_for_should_not do
+    %(Expected no JSON path "#{path}")
+  end
 end
 
 RSpec::Matchers.define :have_json_type do |klass|
@@ -86,7 +96,13 @@ RSpec::Matchers.define :have_json_type do |klass|
   end
 
   failure_message_for_should do
-    message = "Expected JSON value type of #{klass}"
+    message = "Expected JSON value type to be #{klass}"
+    message << %( at path "#{@path}") if @path
+    message
+  end
+
+  failure_message_for_should_not do
+    message = "Expected JSON value type to not be #{klass}"
     message << %( at path "#{@path}") if @path
     message
   end
@@ -106,7 +122,13 @@ RSpec::Matchers.define :have_json_size do |expected_size|
   end
 
   failure_message_for_should do
-    message = "Expected JSON value size of #{expected_size}"
+    message = "Expected JSON value size to be #{expected_size}"
+    message << %( at path "#{@path}") if @path
+    message
+  end
+
+  failure_message_for_should_not do
+    message = "Expected JSON value size to not be #{expected_size}"
     message << %( at path "#{@path}") if @path
     message
   end
