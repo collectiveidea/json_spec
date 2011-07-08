@@ -9,6 +9,7 @@ module JsonSpec
     def pretty_json_value(ruby)
       case ruby
       when Hash, Array then JSON.pretty_generate(ruby)
+      when NilClass then "null"
       else ruby.inspect
       end
     end
