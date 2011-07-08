@@ -181,7 +181,7 @@ versatile and can be used in plenty of different formats:
     Then the JSON should have 3 keys
     Then the JSON should have 4 whatevers
 
-_All instances of "JSON" above could also be downcased and/or followed by "response."_
+_All instances of "should" above could be followed by "not" and all instances of "JSON" could be downcased and/or followed by "response."_
 
 Contributing
 ------------
