@@ -1,4 +1,4 @@
-JsonSpec
+json_spec
 ========
 Easily handle JSON in RSpec and Cucumber
 
@@ -22,7 +22,7 @@ Continuous Integration
 
 RSpec
 --------------
-JsonSpec defines four new RSpec matchers:
+json_spec defines four new RSpec matchers:
 
 * `be_json_eql`
 * `have_json_path`
@@ -56,7 +56,7 @@ The new matchers could be used in RSpec as follows:
 
 ### Exclusions
 
-JsonSpec ignores certain hash keys by default when comparing JSON:
+json_spec ignores certain hash keys by default when comparing JSON:
 
 * `id`
 * `created_at`
@@ -70,13 +70,13 @@ customizeable:
       exclude_keys "created_at", "updated_at"
     end
 
-Now, the `id` key will be included in JsonSpec's comparisons. Keys can also be excluded/included
+Now, the `id` key will be included in json_spec's comparisons. Keys can also be excluded/included
 per matcher by chaining the `excluding` or `including` methods (as shown above) which will add or subtract from
 the globally excluded keys, respectively.
 
 ### Paths
 
-Each of JsonSpec's matchers deal with JSON "paths." These are simple strings of "/" separated
+Each of json_spec's matchers deal with JSON "paths." These are simple strings of "/" separated
 hash keys and array indexes. For instance, with the following JSON:
 
     {
@@ -94,7 +94,7 @@ We could access the first friend's first name with the path `"friends/0/first_na
 
 Cucumber
 --------
-JsonSpec provides Cucumber steps that utilize its RSpec matchers and that's where JsonSpec really
+json_spec provides Cucumber steps that utilize its RSpec matchers and that's where json_spec really
 shines. This is perfect for testing your app's JSON API.
 
 In order to use the Cucumber steps, in your `env.rb` you must:
@@ -107,7 +107,7 @@ You also need to define a `last_json` method. If you're using Capybara, it could
       page.source
     end
 
-Now, you can use the JsonSpec steps in your features:
+Now, you can use the json_spec steps in your features:
 
     Feature: User API
       Background:
@@ -140,8 +140,8 @@ Now, you can use the JsonSpec steps in your features:
           ]
           """
 
-The background steps above aren't provided by JsonSpec and the "visit" steps are provided by
-Capybara. The remaining steps all stem from the five steps that JsonSpec provides. They're
+The background steps above aren't provided by json_spec and the "visit" steps are provided by
+Capybara. The remaining steps all stem from the five steps that json_spec provides. They're
 versatile and can be used in plenty of different formats:
 
     Then the JSON should be:
