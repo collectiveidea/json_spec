@@ -214,7 +214,7 @@ Submitting a Pull Request
 2. Create a topic branch.
 3. Implement your feature or bug fix.
 4. Add specs for your feature or bug fix.
-5. Run <tt>bundle exec rake</tt>. If your changes are not 100% covered and passing, go back to step 4.
+5. Run `bundle exec rake`. If your changes are not 100% covered and passing, go back to step 4.
 6. Commit and push your changes.
 7. Submit a pull request. Please do not include changes to the gemspec, version, or history file. (If you want to create your own version for some reason, please do so in a separate commit.)
 
