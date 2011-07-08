@@ -1,6 +1,6 @@
 require "spec_helper"
 
-describe "Matcher:" do
+describe "Matchers:" do
   context "be_json_eql" do
     it "matches identical JSON" do
       %({"json":"spec"}).should be_json_eql(%({"json":"spec"}))
@@ -63,6 +63,46 @@ describe "Matcher:" do
     it "includes globally-included hash keys given as symbols" do
       JsonSpec.excluded_keys = %w(id)
       %({"id":1,"json":"spec"}).should_not be_json_eql(%({"id":2,"json":"spec"})).including(:id)
+    end
+  end
+
+  context "have_json_size" do
+    it "counts array entries" do
+      %([1,2,3]).should have_json_size(3)
+    end
+
+    it "counts null array entries" do
+      %([1,null,3]).should have_json_size(3)
+    end
+
+    it "counts hash key/value pairs" do
+      %({"one":1,"two":2,"three":3}).should have_json_size(3)
+    end
+
+    it "counts null hash values" do
+      %({"one":1,"two":null,"three":3}).should have_json_size(3)
+    end
+  end
+
+  context "have_json_path" do
+    it "matches hash keys" do
+      %({"one":{"two":{"three":4}}}).should have_json_path("one/two/three")
+    end
+
+    it "doesn't match values" do
+      %({"one":{"two":{"three":4}}}).should_not have_json_path("one/two/three/4")
+    end
+
+    it "matches array indexes" do
+      %([1,[1,2,[1,2,3,4]]]).should have_json_path("1/2/3")
+    end
+
+    it "respects null array values" do
+      %([null,[null,null,[null,null,null,null]]]).should have_json_path("1/2/3")
+    end
+
+    it "matches hash keys and array indexes" do
+      %({"one":[1,2,{"three":4}]}).should have_json_path("one/2/three")
     end
   end
 end
