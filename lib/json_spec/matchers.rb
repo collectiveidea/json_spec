@@ -56,6 +56,42 @@ RSpec::Matchers.define :be_json_eql do |expected_json|
   end
 end
 
+RSpec::Matchers.define :have_json_path do |path|
+  include JsonSpec::Helpers
+
+  match do |json|
+    begin
+      ruby_at_json_path(json, path)
+      true
+    rescue JsonSpec::MissingPathError
+      false
+    end
+  end
+
+  failure_message_for_should do
+    %(Expected JSON path "#{path}")
+  end
+end
+
+RSpec::Matchers.define :have_json_type do |klass|
+  include JsonSpec::Helpers
+
+  match do |json|
+    ruby = @path ? ruby_at_json_path(json, @path) : parse_json_value(json)
+    ruby.is_a?(klass)
+  end
+
+  chain :at_path do |path|
+    @path = path
+  end
+
+  failure_message_for_should do
+    message = "Expected JSON value type of #{klass}"
+    message << %( at path "#{@path}") if @path
+    message
+  end
+end
+
 RSpec::Matchers.define :have_json_size do |expected_size|
   include JsonSpec::Helpers
 
@@ -73,22 +109,5 @@ RSpec::Matchers.define :have_json_size do |expected_size|
     message = "Expected JSON value size of #{expected_size}"
     message << %( at path "#{@path}") if @path
     message
-  end
-end
-
-RSpec::Matchers.define :have_json_path do |path|
-  include JsonSpec::Helpers
-
-  match do |json|
-    begin
-      ruby_at_json_path(json, path)
-      true
-    rescue JsonSpec::MissingPathError
-      false
-    end
-  end
-
-  failure_message_for_should do
-    %(Expected JSON path "#{path}")
   end
 end
