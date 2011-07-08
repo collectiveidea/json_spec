@@ -16,11 +16,11 @@ RSpec::Matchers.define :be_json_eql do |expected_json|
   end
 
   chain :excluding do |*keys|
-    excluded_keys.add(*keys.map(&:to_s))
+    excluded_keys.add(*keys.map{|k| k.to_s })
   end
 
   chain :including do |*keys|
-    excluded_keys.subtract(keys.map(&:to_s))
+    excluded_keys.subtract(keys.map{|k| k.to_s })
   end
 
   failure_message_for_should do
@@ -31,12 +31,7 @@ RSpec::Matchers.define :be_json_eql do |expected_json|
 
   def scrub(json, path = nil)
     ruby = path ? ruby_at_json_path(json, path) : parse_json_value(json)
-    multiline(pretty_json_value(exclude_keys(ruby)))
-  end
-
-  def multiline(string)
-    lines = string.lines.to_a
-    lines.fill(nil, lines.size, 2).join("\n")
+    pretty_json_value(exclude_keys(ruby)).chomp + "\n"
   end
 
   def exclude_keys(ruby)

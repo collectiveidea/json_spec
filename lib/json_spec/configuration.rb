@@ -5,7 +5,7 @@ module JsonSpec
     DEFAULT_EXCLUDED_KEYS = %w(id created_at updated_at)
 
     def configure(&block)
-      instance_exec(self, &block)
+      instance_eval(&block)
     end
 
     def excluded_keys
@@ -13,7 +13,7 @@ module JsonSpec
     end
 
     def excluded_keys=(keys)
-      @excluded_keys = keys.map(&:to_s).uniq
+      @excluded_keys = keys.map{|k| k.to_s }.uniq
     end
 
     def exclude_keys(*keys)
