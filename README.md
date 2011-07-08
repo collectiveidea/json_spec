@@ -14,7 +14,7 @@ Documentation
 -------------
 Please help write documentation!
 
-[http://rdoc.info/github/collectiveidea/json_spec](http://rdoc.info/github/collectiveidea/json_spec)
+[http://rdoc.info/gems/json_spec](http://rdoc.info/gems/json_spec)
 
 Continuous Integration
 ----------------------
