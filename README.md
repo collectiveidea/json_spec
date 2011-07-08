@@ -18,7 +18,7 @@ Please help write documentation!
 
 Continuous Integration
 ----------------------
-Coming soon…
+[![Build Status](http://travis-ci.org/collectiveidea/json_spec.png)](http://travis-ci.org/collectiveidea/json_spec)
 
 RSpec
 --------------
