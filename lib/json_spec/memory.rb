@@ -5,11 +5,12 @@ module JsonSpec
     end
 
     def memorize(key, value)
-      memory[key.to_sym] = value
+      memory[key] = value
     end
 
     def remember(json)
-      json % memory
+      return json if memory.empty?
+      json.gsub(/%\{(#{memory.keys.map{|k| Regexp.quote(k) }.join("|")})\}/){ memory[$1] }
     end
 
     def forget
