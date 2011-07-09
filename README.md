@@ -183,6 +183,42 @@ versatile and can be used in plenty of different formats:
 
 _All instances of "should" above could be followed by "not" and all instances of "JSON" could be downcased and/or followed by "response."_
 
+### JSON Memory
+
+There's one more Cucumber step that json_spec provides which hasn't been used above. It's used to
+memorize JSON for reuse in later steps. You can "keep" all or a portion of the JSON by giving a
+name by which to remember it.
+
+    Feature: User API
+      Scenario: Index action includes full user JSON
+        Given the following user exists:
+          | id | first_name | last_name |
+          | 1  | Steve      | Richert   |
+        And I visit "/users/1.json"
+        And I keep the JSON response as "USER_1"
+        When I visit "/users.json"
+        Then the JSON response should be:
+          """
+          [
+            %{USER_1}
+          ]
+          """
+
+You can memorize JSON at a path:
+
+    Given I keep the JSON response at "first_name" as "FIRST_NAME"
+
+You can remember JSON at a path:
+
+    Then the JSON response at "0/first_name" should be:
+      """
+      %{FIRST_NAME}
+      """
+
+You can also remember JSON inline:
+
+    Then the JSON response at "0/first_name" should be %{FIRST_NAME}
+
 Contributing
 ------------
 In the spirit of [free software](http://www.fsf.org/licensing/essays/free-sw.html), **everyone** is encouraged to help improve this project.
