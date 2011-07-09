@@ -18,6 +18,14 @@ describe "Matchers:" do
       %(["json","spec"]).should_not be_json_eql(%(["spec","json"]))
     end
 
+    it "matches valid JSON values, yet invalid JSON documents" do
+      %("json_spec").should be_json_eql(%("json_spec"))
+    end
+
+    it "matches at a path" do
+      %({"json":["spec"]}).should be_json_eql(%("spec")).at_path("json/0")
+    end
+
     it "ignores excluded-by-default hash keys" do
       JsonSpec.excluded_keys.should_not be_empty
 
@@ -43,6 +51,10 @@ describe "Matchers:" do
 
     it "doesn't match Ruby-equivalent, JSON-inequivalent values" do
       %({"one":1}).should_not be_json_eql(%({"one":1.0}))
+    end
+
+    it "matches different looking, JSON-equivalent values" do
+      %({"ten":10.0}).should be_json_eql(%({"ten":1e+1}))
     end
 
     it "excludes extra hash keys per matcher" do
@@ -81,6 +93,10 @@ describe "Matchers:" do
 
     it "counts null hash values" do
       %({"one":1,"two":null,"three":3}).should have_json_size(3)
+    end
+
+    it "matches at a path" do
+      %({"one":[1,2,3]}).should have_json_size(3).at_path("one")
     end
   end
 
