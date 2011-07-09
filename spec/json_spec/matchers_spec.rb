@@ -105,4 +105,58 @@ describe "Matchers:" do
       %({"one":[1,2,{"three":4}]}).should have_json_path("one/2/three")
     end
   end
+
+  context "have_json_type" do
+    it "matches hashes" do
+      %({}).should have_json_type(Hash)
+    end
+
+    it "matches arrays" do
+      %([]).should have_json_type(Array)
+    end
+
+    it "matches at a path" do
+      %({"root":[]}).should have_json_type(Array).at_path("root")
+    end
+
+    it "matches strings" do
+      %(["json_spec"]).should have_json_type(String).at_path("0")
+    end
+
+    it "matches a valid JSON value, yet invalid JSON document" do
+      %("json_spec").should have_json_type(String)
+    end
+
+    it "matches empty strings" do
+      %("").should have_json_type(String)
+    end
+
+    it "matches integers" do
+      %(10).should have_json_type(Integer)
+    end
+
+    it "matches floats" do
+      %(10.0).should have_json_type(Float)
+      %(1e+1).should have_json_type(Float)
+    end
+
+    it "matches ancestor classes" do
+      %(10).should have_json_type(Numeric)
+      %(10.0).should have_json_type(Numeric)
+    end
+
+    context "somewhat uselessly" do
+      it "matches true" do
+        %(true).should have_json_type(TrueClass)
+      end
+
+      it "matches false" do
+        %(false).should have_json_type(FalseClass)
+      end
+
+      it "matches null" do
+        %(null).should have_json_type(NilClass)
+      end
+    end
+  end
 end
