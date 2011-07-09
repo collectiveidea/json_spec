@@ -7,7 +7,7 @@ After do
 end
 
 When /^(?:I )?keep the (?:JSON|json)(?: response)?(?: at "(.*)")? as "(.*)"$/ do |path, key|
-  JsonSpec.memorize(key, path ? json_at_path(last_json, path) : last_json)
+  JsonSpec.memorize(key, normalize_json(last_json, path))
 end
 
 Then /^the (?:JSON|json)(?: response)?(?: at "(.*)")? should( not)? be:$/ do |path, negative, json|

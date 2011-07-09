@@ -36,8 +36,7 @@ RSpec::Matchers.define :be_json_eql do |expected_json|
   end
 
   def scrub(json, path = nil)
-    ruby = path ? ruby_at_json_path(json, path) : parse_json_value(json)
-    pretty_json_value(exclude_keys(ruby)).chomp + "\n"
+    generate_normalized_json(exclude_keys(parse_json(json, path))).chomp + "\n"
   end
 
   def exclude_keys(ruby)
@@ -67,7 +66,7 @@ RSpec::Matchers.define :have_json_path do |path|
 
   match do |json|
     begin
-      ruby_at_json_path(json, path)
+      parse_json(json, path)
       true
     rescue JsonSpec::MissingPathError
       false
@@ -87,8 +86,7 @@ RSpec::Matchers.define :have_json_type do |klass|
   include JsonSpec::Helpers
 
   match do |json|
-    ruby = @path ? ruby_at_json_path(json, @path) : parse_json_value(json)
-    ruby.is_a?(klass)
+    parse_json(json, @path).is_a?(klass)
   end
 
   chain :at_path do |path|
@@ -112,7 +110,7 @@ RSpec::Matchers.define :have_json_size do |expected_size|
   include JsonSpec::Helpers
 
   match do |json|
-    ruby = @path ? ruby_at_json_path(json, @path) : parse_json_value(json)
+    ruby = parse_json(json, @path)
     actual_size = ruby.is_a?(Enumerable) ? ruby.size : 1
     actual_size == expected_size
   end

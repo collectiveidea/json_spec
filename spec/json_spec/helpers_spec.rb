@@ -3,115 +3,72 @@ require "spec_helper"
 describe JsonSpec::Helpers do
   include described_class
 
-  context "parse_json_value" do
+  context "parse_json" do
     it "parses JSON documents" do
-      parse_json_value(%({"json":["spec"]})).should == {"json" => ["spec"]}
+      parse_json(%({"json":["spec"]})).should == {"json" => ["spec"]}
     end
 
     it "parses JSON values" do
-      parse_json_value(%("json_spec")).should == "json_spec"
+      parse_json(%("json_spec")).should == "json_spec"
     end
 
     it "raises a parser error for invalid JSON" do
-      expect{ parse_json_value("json_spec") }.to raise_error(JSON::ParserError)
-    end
-  end
-
-  context "json_path_to_keys" do
-    it "splits on slashes" do
-      json_path_to_keys("json/spec").should == ["json", "spec"]
+      expect{ parse_json("json_spec") }.to raise_error(JSON::ParserError)
     end
 
-    it "converts digits to integers" do
-      json_path_to_keys("json/spec/1/2/3").should == ["json", "spec", 1, 2, 3]
-    end
-
-    it "ignores leading and trailing slashes" do
-      json_path_to_keys("/json/spec/").should == ["json", "spec"]
-    end
-  end
-
-  context "ruby_at_json_path" do
-    let(:json){ %({"json":["spec"]}) }
-
-    it "parses JSON at a path" do
-      ruby_at_json_path(json, "json").should == ["spec"]
-      ruby_at_json_path(json, "json/0").should == "spec"
+    it "parses at a path if given" do
+      json = %({"json":["spec"]})
+      parse_json(json, "json").should == ["spec"]
+      parse_json(json, "json/0").should == "spec"
     end
 
     it "raises an error for a missing path" do
-      %w(spec json/1 json/0/0).each do |path|
-        expect{ ruby_at_json_path(json, path).to raise_error(JsonSpec::MissingPathError) }
+      json = %({"json":["spec"]})
+      %w(spec json/1).each do |path|
+        expect{ parse_json(json, path) }.to raise_error(JsonSpec::MissingPathError)
       end
     end
   end
 
-  context "pretty_json_value" do
-    it "formats a hash" do
-      pretty = <<-JSON
-{
-  "json": "spec"
-}
-      JSON
-      pretty_json_value({"json" => "spec"}).should == pretty.chomp
-    end
-
-    it "formats an array" do
-      pretty = <<-JSON
-[
-  "json",
-  "spec"
-]
-      JSON
-      pretty_json_value(["json", "spec"]).should == pretty.chomp
-    end
-
-    it "formats nested structures" do
-      pretty = <<-JSON
+  context "normalize_json" do
+    it "normalizes a JSON document" do
+      normalized = <<-JSON
 {
   "json": [
     "spec"
   ]
 }
       JSON
-      pretty_json_value({"json" => ["spec"]}).should == pretty.chomp
+      normalize_json(%({"json":["spec"]})).should == normalized.chomp
     end
 
-    it "formats a string" do
-      pretty_json_value("json_spec").should == %("json_spec")
+    it "normalizes at a path" do
+      normalize_json(%({"json":["spec"]}), "json/0").should == %("spec")
     end
 
-    it "formats an integer" do
-      pretty_json_value(10).should == %(10)
+    it "accepts a JSON value" do
+      normalize_json(%("json_spec")).should == %("json_spec")
     end
 
-    it "formats a float" do
-      pretty_json_value(10.0).should == %(10.0)
-    end
-
-    it "formats true" do
-      pretty_json_value(true).should == %(true)
-    end
-
-    it "formats false" do
-      pretty_json_value(false).should == %(false)
-    end
-
-    it "formats nil" do
-      pretty_json_value(nil).should == %(null)
+    it "normalizes JSON values" do
+      normalize_json(%(1e+1)).should == %(10.0)
     end
   end
 
-  context "json_at_path" do
-    it "formats inline JSON" do
-      json = %({"json":["spec"]})
-      array = <<-JSON
-[
-  "spec"
-]
+  context "generate_normalized_json" do
+    it "generates a normalized JSON document" do
+      normalized = <<-JSON
+{
+  "json": [
+    "spec"
+  ]
+}
       JSON
-      json_at_path(json, "json").should == array.chomp
-      json_at_path(json, "json/0").should == %("spec")
+      generate_normalized_json({"json" => ["spec"]}).should == normalized.chomp
+    end
+
+    it "generates a normalized JSON value" do
+      generate_normalized_json(nil).should == %(null)
     end
   end
 end
