@@ -2,19 +2,27 @@ require File.expand_path("../../json_spec", __FILE__)
 
 World(JsonSpec::Helpers)
 
+After do
+  JsonSpec.forget
+end
+
+When /^(?:I )?keep the (?:JSON|json)(?: response)?(?: at "(.*)")? as "(.*)"$/ do |path, key|
+  JsonSpec.memorize(key, path ? json_at_path(last_json, path) : last_json)
+end
+
 Then /^the (?:JSON|json)(?: response)?(?: at "(.*)")? should( not)? be:$/ do |path, negative, json|
   if negative
-    last_json.should_not be_json_eql(json).at_path(path)
+    last_json.should_not be_json_eql(JsonSpec.remember(json)).at_path(path)
   else
-    last_json.should be_json_eql(json).at_path(path)
+    last_json.should be_json_eql(JsonSpec.remember(json)).at_path(path)
   end
 end
 
-Then /^the (?:JSON|json)(?: response)?(?: at "(.*)")? should( not)? be (".*"|\-?\d+(?:\.\d+)?(?:[eE][\+\-]?\d+)?|\[.*\]|\{.*\}|true|false|null)$/ do |path, negative, value|
+Then /^the (?:JSON|json)(?: response)?(?: at "(.*)")? should( not)? be (".*"|\-?\d+(?:\.\d+)?(?:[eE][\+\-]?\d+)?|\[.*\]|%?\{.*\}|true|false|null)$/ do |path, negative, value|
   if negative
-    last_json.should_not be_json_eql(value).at_path(path)
+    last_json.should_not be_json_eql(JsonSpec.remember(value)).at_path(path)
   else
-    last_json.should be_json_eql(value).at_path(path)
+    last_json.should be_json_eql(JsonSpec.remember(value)).at_path(path)
   end
 end
 
