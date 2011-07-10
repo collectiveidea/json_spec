@@ -141,8 +141,8 @@ Now, you can use the json_spec steps in your features:
           """
 
 The background steps above aren't provided by json_spec and the "visit" steps are provided by
-Capybara. The remaining steps all stem from the five steps that json_spec provides. They're
-versatile and can be used in plenty of different formats:
+Capybara. The remaining steps, json_spec provides. They're versatile and can be used in plenty of
+different formats:
 
     Then the JSON should be:
       """
@@ -182,6 +182,30 @@ versatile and can be used in plenty of different formats:
     Then the JSON should have 4 whatevers
 
 _All instances of "should" above could be followed by "not" and all instances of "JSON" could be downcased and/or followed by "response."_
+
+### Table format
+
+Another step exists that uses Cucumber's table formatting and wraps two of the above steps:
+
+    Then the JSON should have the following:
+      | path/0 | {"key":"value"}   |
+      | path/1 | ["entry","entry"] |
+
+Any number of rows can be given. The step above is equivalent to:
+
+    Then the JSON at "path/0" should be {"key":"value"}
+    And the JSON at "path/1" should be ["entry","entry"]
+
+If only one column is given:
+
+    Then the JSON should have the following:
+      | path/0 |
+      | path/1 |
+
+This is equivalent to:
+
+    Then the JSON should have "path/0"
+    And the JSON should have "path/1"
 
 ### JSON Memory
 
