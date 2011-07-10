@@ -26,6 +26,18 @@ Then /^the (?:JSON|json)(?: response)?(?: at "(.*)")? should( not)? be (".*"|\-?
   end
 end
 
+Then /^the (?:JSON|json)(?: response)?(?: at "(.*)")? should have the following:$/ do |base, table|
+  table.rows.each do |path, value|
+    path = [base, path].compact.join("/")
+
+    if value
+      Then %(the JSON at "#{path}" should be:), value
+    else
+      Then %(the JSON should have "#{path}")
+    end
+  end
+end
+
 Then /^the (?:JSON|json)(?: response)? should( not)? have "(.*)"$/ do |negative, path|
   if negative
     last_json.should_not have_json_path(path)
