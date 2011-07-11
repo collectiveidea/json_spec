@@ -5,3 +5,7 @@ rvm:
   - ruby-head
   - rbx
   - jruby
+only:
+  - master
+notifications:
+  disabled: true
