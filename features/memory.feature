@@ -182,3 +182,22 @@ Feature: Memory
         "true": true
       }
       """
+
+  Scenario: Table format
+    When I keep the JSON at "string" as "STRING"
+    And I keep the JSON at "integer" as "INTEGER"
+    And I keep the JSON at "float" as "FLOAT"
+    And I keep the JSON at "array" as "ARRAY"
+    And I keep the JSON at "hash" as "HASH"
+    And I keep the JSON at "true" as "TRUE"
+    And I keep the JSON at "false" as "FALSE"
+    And I keep the JSON at "null" as "NULL"
+    And the JSON should have the following:
+      | string  | %{STRING}  |
+      | integer | %{INTEGER} |
+      | float   | %{FLOAT}   |
+      | array   | %{ARRAY}   |
+      | hash    | %{HASH}    |
+      | true    | %{TRUE}    |
+      | false   | %{FALSE}   |
+      | null    | %{NULL}    |
