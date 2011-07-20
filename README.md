@@ -22,9 +22,10 @@ Continuous Integration
 
 RSpec
 --------------
-json_spec defines four new RSpec matchers:
+json_spec defines five new RSpec matchers:
 
 * `be_json_eql`
+* `include_json`
 * `have_json_path`
 * `have_json_type`
 * `have_json_size`
@@ -50,6 +51,7 @@ The new matchers could be used in RSpec as follows:
           json.should have_json_size(0).at_path("friends")
           user.friends << User.create!(:first_name => "Catie", :last_name => "Richert")
           json.should have_json_size(1).at_path("friends")
+          json.should include_json(%({"first_name":"Catie","last_name":"Richert"}))
         end
       end
     end
@@ -169,6 +171,39 @@ different formats:
     Then the JSON at "path" should be true
     Then the JSON at "path" should be false
     Then the JSON at "path" should be null
+
+    Then the JSON should include:
+      """
+      {
+        "key": "value"
+      }
+      """
+    Then the JSON at "path" should include:
+      """
+      [
+        "entry",
+        "entry"
+      ]
+      """
+
+    Then the JSON should include {"key":"value"}
+    Then the JSON at "path" should include {"key":"value"}
+    Then the JSON should include ["entry","entry"]
+    Then the JSON at "path" should include ["entry","entry"]
+    Then the JSON should include "string"
+    Then the JSON at "path" should include "string"
+    Then the JSON should include 10
+    Then the JSON at "path" should include 10
+    Then the JSON should include 10.0
+    Then the JSON at "path" should include 10.0
+    Then the JSON should include 1e+1
+    Then the JSON at "path" should include 1e+1
+    Then the JSON should include true
+    Then the JSON at "path" should include true
+    Then the JSON should include false
+    Then the JSON at "path" should include false
+    Then the JSON should include null
+    Then the JSON at "path" should include null
 
     Then the JSON should have "path"
 
