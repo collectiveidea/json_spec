@@ -3,6 +3,7 @@ require "rspec"
 
 RSpec::Matchers.define :be_json_eql do |expected_json|
   include JsonSpec::Helpers
+  include JsonSpec::Exclusion
 
   diffable
 
@@ -38,26 +39,44 @@ RSpec::Matchers.define :be_json_eql do |expected_json|
   def scrub(json, path = nil)
     generate_normalized_json(exclude_keys(parse_json(json, path))).chomp + "\n"
   end
+end
 
-  def exclude_keys(ruby)
-    case ruby
-    when Hash
-      ruby.sort.inject({}) do |hash, (key, value)|
-        hash[key] = exclude_keys(value) unless exclude_key?(key)
-        hash
-      end
-    when Array
-      ruby.map{|v| exclude_keys(v) }
-    else ruby
+RSpec::Matchers.define :include_json do |expected_json|
+  include JsonSpec::Helpers
+  include JsonSpec::Exclusion
+
+  match do |actual_json|
+    actual = parse_json(actual_json, @path)
+    expected = exclude_keys(parse_json(expected_json))
+    case actual
+    when Hash then actual.values.map{|v| exclude_keys(v) }.include?(expected)
+    when Array then actual.map{|e| exclude_keys(e) }.include?(expected)
+    else false
     end
   end
 
-  def exclude_key?(key)
-    excluded_keys.include?(key)
+  chain :at_path do |path|
+    @path = path
   end
 
-  def excluded_keys
-    @excluded_keys ||= Set.new(JsonSpec.excluded_keys)
+  chain :excluding do |*keys|
+    excluded_keys.add(*keys.map{|k| k.to_s })
+  end
+
+  chain :including do |*keys|
+    excluded_keys.subtract(keys.map{|k| k.to_s })
+  end
+
+  failure_message_for_should do
+    message = "Expected included JSON"
+    message << %( at path "#{@path}") if @path
+    message
+  end
+
+  failure_message_for_should_not do
+    message = "Expected excluded JSON"
+    message << %( at path "#{@path}") if @path
+    message
   end
 end
 

@@ -26,6 +26,22 @@ Then /^the (?:JSON|json)(?: response)?(?: at "(.*)")? should( not)? be (".*"|\-?
   end
 end
 
+Then /^the (?:JSON|json)(?: response)?(?: at "(.*)")? should( not)? include:$/ do |path, negative, json|
+  if negative
+    last_json.should_not include_json(JsonSpec.remember(json)).at_path(path)
+  else
+    last_json.should include_json(JsonSpec.remember(json)).at_path(path)
+  end
+end
+
+Then /^the (?:JSON|json)(?: response)?(?: at "(.*)")? should( not)? include (".*"|\-?\d+(?:\.\d+)?(?:[eE][\+\-]?\d+)?|\[.*\]|%?\{.*\}|true|false|null)$/ do |path, negative, value|
+  if negative
+    last_json.should_not include_json(JsonSpec.remember(value)).at_path(path)
+  else
+    last_json.should include_json(JsonSpec.remember(value)).at_path(path)
+  end
+end
+
 Then /^the (?:JSON|json)(?: response)?(?: at "(.*)")? should have the following:$/ do |base, table|
   table.rows.each do |path, value|
     path = [base, path].compact.join("/")
