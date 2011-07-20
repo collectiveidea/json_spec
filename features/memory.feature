@@ -192,7 +192,7 @@ Feature: Memory
     And I keep the JSON at "true" as "TRUE"
     And I keep the JSON at "false" as "FALSE"
     And I keep the JSON at "null" as "NULL"
-    And the JSON should have the following:
+    Then the JSON should have the following:
       | string  | %{STRING}  |
       | integer | %{INTEGER} |
       | float   | %{FLOAT}   |
@@ -201,3 +201,21 @@ Feature: Memory
       | true    | %{TRUE}    |
       | false   | %{FALSE}   |
       | null    | %{NULL}    |
+
+  Scenario: Inclusion
+    When I keep the JSON at "string" as "STRING"
+    And I keep the JSON at "integer" as "INTEGER"
+    And I keep the JSON at "float" as "FLOAT"
+    And I keep the JSON at "array" as "ARRAY"
+    And I keep the JSON at "hash" as "HASH"
+    And I keep the JSON at "true" as "TRUE"
+    And I keep the JSON at "false" as "FALSE"
+    And I keep the JSON at "null" as "NULL"
+    Then the JSON should include %{STRING}
+    And the JSON should include %{INTEGER}
+    And the JSON should include %{FLOAT}
+    And the JSON should include %{ARRAY}
+    And the JSON should include %{HASH}
+    And the JSON should include %{TRUE}
+    And the JSON should include %{FALSE}
+    And the JSON should include %{NULL}
