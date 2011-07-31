@@ -152,6 +152,18 @@ describe "Matchers:" do
     it "matches at a path" do
       %({"one":[1,2,3]}).should have_json_size(3).at_path("one")
     end
+
+    it "provides a failure message for should" do
+      matcher = have_json_size(3)
+      matcher.matches?(%([1,2]))
+      matcher.failure_message_for_should.should == "Expected JSON value size to be 3, got 2"
+    end
+
+    it "provides a failure message for should not" do
+      matcher = have_json_size(3)
+      matcher.matches?(%([1,2,3]))
+      matcher.failure_message_for_should_not.should == "Expected JSON value size to not be 3, got 3"
+    end
   end
 
   context "have_json_path" do
@@ -213,6 +225,18 @@ describe "Matchers:" do
     it "matches ancestor classes" do
       %(10).should have_json_type(Numeric)
       %(10.0).should have_json_type(Numeric)
+    end
+
+    it "provides a failure message for should" do
+      matcher = have_json_type(Numeric)
+      matcher.matches?(%("foo"))
+      matcher.failure_message_for_should.should == "Expected JSON value type to be Numeric, got String"
+    end
+
+    it "provides a failure message for should not" do
+      matcher = have_json_type(Numeric)
+      matcher.matches?(%(10))
+      matcher.failure_message_for_should_not.should == "Expected JSON value type to not be Numeric, got Fixnum"
     end
 
     context "somewhat uselessly" do
