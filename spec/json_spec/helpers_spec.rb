@@ -13,7 +13,7 @@ describe JsonSpec::Helpers do
     end
 
     it "raises a parser error for invalid JSON" do
-      expect{ parse_json("json_spec") }.to raise_error(JSON::ParserError)
+      expect{ parse_json("json_spec") }.to raise_error(MultiJson::DecodeError)
     end
 
     it "parses at a path if given" do
