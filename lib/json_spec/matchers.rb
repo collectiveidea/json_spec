@@ -105,7 +105,8 @@ RSpec::Matchers.define :have_json_type do |klass|
   include JsonSpec::Helpers
 
   match do |json|
-    parse_json(json, @path).is_a?(klass)
+    @json = json
+    actual.is_a?(klass)
   end
 
   chain :at_path do |path|
@@ -113,15 +114,19 @@ RSpec::Matchers.define :have_json_type do |klass|
   end
 
   failure_message_for_should do
-    message = "Expected JSON value type to be #{klass}"
+    message = "Expected JSON value type to be #{klass}, got #{actual.class}"
     message << %( at path "#{@path}") if @path
     message
   end
 
   failure_message_for_should_not do
-    message = "Expected JSON value type to not be #{klass}"
+    message = "Expected JSON value type to not be #{klass}, got #{actual.class}"
     message << %( at path "#{@path}") if @path
     message
+  end
+
+  def actual
+    parse_json(@json, @path)
   end
 end
 
@@ -129,8 +134,7 @@ RSpec::Matchers.define :have_json_size do |expected_size|
   include JsonSpec::Helpers
 
   match do |json|
-    ruby = parse_json(json, @path)
-    actual_size = ruby.is_a?(Enumerable) ? ruby.size : 1
+    @json = json
     actual_size == expected_size
   end
 
@@ -139,14 +143,19 @@ RSpec::Matchers.define :have_json_size do |expected_size|
   end
 
   failure_message_for_should do
-    message = "Expected JSON value size to be #{expected_size}"
+    message = "Expected JSON value size to be #{expected_size}, got #{actual_size}"
     message << %( at path "#{@path}") if @path
     message
   end
 
   failure_message_for_should_not do
-    message = "Expected JSON value size to not be #{expected_size}"
+    message = "Expected JSON value size to not be #{expected_size}, got #{actual_size}"
     message << %( at path "#{@path}") if @path
     message
+  end
+
+  def actual_size
+    ruby = parse_json(@json, @path)
+    ruby.is_a?(Enumerable) ? ruby.size : 1
   end
 end
