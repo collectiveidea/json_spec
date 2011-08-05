@@ -4,7 +4,6 @@ rvm:
   - 1.9.2
   - ruby-head
   - rbx
-  - jruby
 only:
   - master
 notifications:
