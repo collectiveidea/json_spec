@@ -17,7 +17,7 @@ RSpec::Matchers.define :be_json_eql do |expected_json|
   end
 
   chain :excluding do |*keys|
-    excluded_keys.add(*keys.map{|k| k.to_s })
+    excluded_keys.merge(keys.map{|k| k.to_s })
   end
 
   chain :including do |*keys|
@@ -60,7 +60,7 @@ RSpec::Matchers.define :include_json do |expected_json|
   end
 
   chain :excluding do |*keys|
-    excluded_keys.add(*keys.map{|k| k.to_s })
+    excluded_keys.merge(*keys.map{|k| k.to_s })
   end
 
   chain :including do |*keys|
