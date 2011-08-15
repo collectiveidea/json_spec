@@ -67,6 +67,11 @@ describe "Matchers:" do
       %({"id":1,"json":"spec"}).should be_json_eql(%({"id":2,"json":"spec"})).excluding(:id)
     end
 
+    it "excludes multiple keys" do
+      JsonSpec.excluded_keys = []
+      %({"id":1,"json":"spec"}).should be_json_eql(%({"id":2,"json":"different"})).excluding(:id, :json)
+    end
+
     it "includes globally-excluded hash keys per matcher" do
       JsonSpec.excluded_keys = %w(id ignore)
       %({"id":1,"json":"spec","ignore":"please"}).should_not be_json_eql(%({"id":2,"json":"spec","ignore":"this"})).including("id")
@@ -75,6 +80,11 @@ describe "Matchers:" do
     it "includes globally-included hash keys given as symbols" do
       JsonSpec.excluded_keys = %w(id)
       %({"id":1,"json":"spec"}).should_not be_json_eql(%({"id":2,"json":"spec"})).including(:id)
+    end
+
+    it "includes multiple keys" do
+      JsonSpec.excluded_keys = %w(id json)
+      %({"id":1,"json":"spec"}).should_not be_json_eql(%({"id":2,"json":"different"})).including(:id, :json)
     end
   end
 
