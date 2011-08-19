@@ -23,6 +23,13 @@ module JsonSpec
       end
     end
 
+    def load_json(relative_path)
+      missing_json_directory! if JsonSpec.directory.nil?
+      path = File.join(JsonSpec.directory, relative_path)
+      missing_json_file!(path) unless File.exist?(path)
+      File.read(path)
+    end
+
     private
       def value_at_json_path(ruby, path)
         return ruby unless path
@@ -41,6 +48,14 @@ module JsonSpec
 
       def missing_json_path!(path)
         raise JsonSpec::MissingPathError.new(path)
+      end
+
+      def missing_json_directory!
+        raise JsonSpec::MissingDirectoryError
+      end
+
+      def missing_json_file!(path)
+        raise JsonSpec::MissingFileError.new(path)
       end
   end
 end

@@ -20,6 +20,14 @@ module JsonSpec
       self.excluded_keys = keys
     end
 
+    def directory
+      @directory
+    end
+
+    def directory=(directory)
+      @directory = directory
+    end
+
     def reset
       instance_variables.each{|iv| remove_instance_variable(iv) }
     end

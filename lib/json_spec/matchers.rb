@@ -13,17 +13,24 @@ module JsonSpec
         true
       end
 
-      def initialize(expected_json)
+      def initialize(expected_json = nil)
         @expected_json = expected_json
       end
 
       def matches?(actual_json)
+        raise "Expected equivalent JSON not provided" if @expected_json.nil?
+
         @actual, @expected = scrub(actual_json, @path), scrub(@expected_json)
         @actual == @expected
       end
 
       def at_path(path)
         @path = path
+        self
+      end
+
+      def to_file(path)
+        @expected_json = load_json(path)
         self
       end
 
@@ -65,11 +72,13 @@ module JsonSpec
       include JsonSpec::Helpers
       include JsonSpec::Exclusion
 
-      def initialize(expected_json)
+      def initialize(expected_json = nil)
         @expected_json = expected_json
       end
 
       def matches?(actual_json)
+        raise "Expected included JSON not provided" if @expected_json.nil?
+
         actual = parse_json(actual_json, @path)
         expected = exclude_keys(parse_json(@expected_json))
         case actual
@@ -81,6 +90,11 @@ module JsonSpec
 
       def at_path(path)
         @path = path
+        self
+      end
+
+      def from_file(path)
+        @expected_json = load_json(path)
         self
       end
 
@@ -215,11 +229,11 @@ module JsonSpec
       end
     end
 
-    def be_json_eql(json)
+    def be_json_eql(json = nil)
       JsonSpec::Matchers::BeJsonEql.new(json)
     end
 
-    def include_json(json)
+    def include_json(json = nil)
       JsonSpec::Matchers::IncludeJson.new(json)
     end
 

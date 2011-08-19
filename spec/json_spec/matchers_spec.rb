@@ -1,6 +1,8 @@
 require "spec_helper"
 
 describe "Matchers:" do
+  let(:files_path){ File.expand_path("../../../features/support/files", __FILE__) }
+
   context "be_json_eql" do
     it "matches identical JSON" do
       %({"json":"spec"}).should be_json_eql(%({"json":"spec"}))
@@ -98,6 +100,15 @@ describe "Matchers:" do
       matcher.matches?(%({"id":1,"json":["spec"]}))
       matcher.description.should == %(equal JSON at path "json/0")
     end
+
+    it "raises an error when not given expected JSON" do
+      expect{ %({"id":1,"json":"spec"}).should be_json_eql }.to raise_error
+    end
+
+    it "matches file contents" do
+      JsonSpec.directory = files_path
+      %({ "value" : "from_file" }).should be_json_eql.to_file("one.json")
+    end
   end
 
   context "include_json" do
@@ -163,6 +174,15 @@ describe "Matchers:" do
       matcher = include_json(%("spec")).at_path("json/0")
       matcher.matches?(%({"id":1,"json":["spec"]}))
       matcher.description.should == %(include JSON at path "json/0")
+    end
+
+    it "raises an error when not given expected JSON" do
+      expect{ %([{"id":1,"two":3}]).should include_json }.to raise_error
+    end
+
+    it "matches file contents" do
+      JsonSpec.directory = files_path
+      %({"one":{"value":"from_file"},"four":{"five":6}}).should include_json.from_file("one.json")
     end
   end
 

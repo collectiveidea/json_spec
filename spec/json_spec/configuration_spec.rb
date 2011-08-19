@@ -49,4 +49,14 @@ describe JsonSpec::Configuration do
     JsonSpec.reset
     JsonSpec.excluded_keys.should == original
   end
+
+  it "resets its directory" do
+    JsonSpec.directory.should be_nil
+
+    JsonSpec.directory = "/"
+    JsonSpec.directory.should_not be_nil
+
+    JsonSpec.reset
+    JsonSpec.directory.should be_nil
+  end
 end

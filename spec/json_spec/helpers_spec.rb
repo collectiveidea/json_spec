@@ -71,4 +71,38 @@ describe JsonSpec::Helpers do
       generate_normalized_json(nil).should == %(null)
     end
   end
+
+  context "load_json_file" do
+    let(:files_path){ File.expand_path("../../../features/support/files", __FILE__) }
+
+    it "raises an error when no directory is set" do
+      expect{ load_json("one.json") }.to raise_error(JsonSpec::MissingDirectoryError)
+    end
+
+    it "returns JSON when the file exists" do
+      JsonSpec.directory = files_path
+      load_json("one.json").should == %({"value":"from_file"})
+    end
+
+    it "ignores extra slashes" do
+      JsonSpec.directory = "/#{files_path}/"
+      load_json("one.json").should == %({"value":"from_file"})
+    end
+
+    it "raises an error when the file doesn't exist" do
+      JsonSpec.directory = files_path
+      expect{ load_json("bogus.json") }.to raise_error(JsonSpec::MissingFileError)
+    end
+
+    it "raises an error when the directory doesn't exist" do
+      JsonSpec.directory = "#{files_path}_bogus"
+      expect{ load_json("one.json") }.to raise_error(JsonSpec::MissingFileError)
+    end
+
+    it "finds nested files" do
+      JsonSpec.directory = files_path
+      load_json("project/one.json").should == %({"nested":"inside_folder"})
+      load_json("project/version/one.json").should == %({"nested":"deeply"})
+    end
+  end
 end
