@@ -1,14 +1,17 @@
 require "json"
 require "rspec"
 
-RSpec::Matchers.define :be_json_eql do |expected_json|
+RSpec::Matchers.define :be_json_eql do |*args|
   include JsonSpec::Helpers
   include JsonSpec::Exclusion
+
+  @expected_json = args.first if args.size > 0
 
   diffable
 
   match do |actual_json|
-    @actual, @expected = scrub(actual_json, @path), [scrub(expected_json)]
+    raise "Expected equivalent JSON not provided" if @expected_json.nil?
+    @actual, @expected = scrub(actual_json, @path), [scrub(@expected_json)]
     @actual == @expected.first
   end
 
@@ -22,6 +25,10 @@ RSpec::Matchers.define :be_json_eql do |expected_json|
 
   chain :including do |*keys|
     excluded_keys.subtract(keys.map{|k| k.to_s })
+  end
+  
+  chain :to_file do |relative_file_path|
+    @expected_json = load_json(relative_file_path)
   end
 
   failure_message_for_should do
@@ -41,13 +48,18 @@ RSpec::Matchers.define :be_json_eql do |expected_json|
   end
 end
 
-RSpec::Matchers.define :include_json do |expected_json|
+RSpec::Matchers.define :include_json do |*args|
   include JsonSpec::Helpers
   include JsonSpec::Exclusion
 
+  @expected_json = args.first if args.size > 0
+
   match do |actual_json|
+    raise "Expected equivalent JSON not provided" if @expected_json.nil?
+    
     actual = parse_json(actual_json, @path)
-    expected = exclude_keys(parse_json(expected_json))
+    expected = exclude_keys(parse_json(@expected_json))
+    
     case actual
     when Hash then actual.values.map{|v| exclude_keys(v) }.include?(expected)
     when Array then actual.map{|e| exclude_keys(e) }.include?(expected)
@@ -65,6 +77,10 @@ RSpec::Matchers.define :include_json do |expected_json|
 
   chain :including do |*keys|
     excluded_keys.subtract(keys.map{|k| k.to_s })
+  end
+  
+  chain :from_file do |relative_file_path|
+    @expected_json = load_json(relative_file_path)
   end
 
   failure_message_for_should do

@@ -23,4 +23,5 @@ Gem::Specification.new do |s|
 
   s.add_development_dependency "rake", "~> 0.9"
   s.add_development_dependency "cucumber", "~> 1.0"
+  s.add_development_dependency "ruby-debug"
 end
