@@ -1,13 +1,3 @@
 {
-  "array": [
-
-  ],
-  "false": false,
-  "float": 10.0,
-  "hash": {
-  },
-  "integer": 10,
-  "null": null,
-  "string": "json_spec",
-  "true": true
+  "json": "spec"
 }

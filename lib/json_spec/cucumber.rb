@@ -18,6 +18,14 @@ Then /^the (?:JSON|json)(?: response)?(?: at "(.*)")? should( not)? be:$/ do |pa
   end
 end
 
+Then /^the (?:JSON|json)(?: response)?(?: at "(.*)")? should( not)? be file "(.+)"$/ do |path, negative, file_path|
+  if negative
+    last_json.should_not be_json_eql.to_file(file_path).at_path(path)
+  else
+    last_json.should be_json_eql.to_file(file_path).at_path(path)
+  end
+end
+
 Then /^the (?:JSON|json)(?: response)?(?: at "(.*)")? should( not)? be (".*"|\-?\d+(?:\.\d+)?(?:[eE][\+\-]?\d+)?|\[.*\]|%?\{.*\}|true|false|null)$/ do |path, negative, value|
   if negative
     last_json.should_not be_json_eql(JsonSpec.remember(value)).at_path(path)
@@ -31,6 +39,14 @@ Then /^the (?:JSON|json)(?: response)?(?: at "(.*)")? should( not)? include:$/ d
     last_json.should_not include_json(JsonSpec.remember(json)).at_path(path)
   else
     last_json.should include_json(JsonSpec.remember(json)).at_path(path)
+  end
+end
+
+Then /^the (?:JSON|json)(?: response)?(?: at "(.*)")? should( not)? include file "(.+)"$/ do |path, negative, file_path|
+  if negative
+    last_json.should_not include_json.from_file(file_path).at_path(path)
+  else
+    last_json.should include_json.from_file(file_path).at_path(path)
   end
 end
 
