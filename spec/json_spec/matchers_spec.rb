@@ -198,6 +198,16 @@ describe "Matchers:" do
     end
   end
 
+  context "have_json_type_boolean" do
+    it "matches true" do
+      %(true).should have_json_type_boolean
+    end
+
+    it "matches false" do
+      %(false).should have_json_type_boolean
+    end
+  end
+
   context "have_json_type" do
     it "matches hashes" do
       %({}).should have_json_type(Hash)
