@@ -56,6 +56,18 @@ The new matchers could be used in RSpec as follows:
       end
     end
 
+Also json_spec provides some useful helpers for RSpec tests:
+* `parse_json`
+* `normalize_json`
+* `generate_normalized_json`
+
+To start using them add include statement in your Rspec.configure at spec_helper.rb file:
+    RSpec.configure do |config|
+      include JsonSpec::Helpers
+    end
+
+Examples of usage this methods you can find in spec/json_spec/helpers_spec.rb
+
 ### Exclusions
 
 json_spec ignores certain hash keys by default when comparing JSON:
