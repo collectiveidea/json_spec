@@ -57,6 +57,7 @@ The new matchers could be used in RSpec as follows:
     end
 
 Also json_spec provides some useful helpers for RSpec tests:
+
 * `parse_json`
 * `normalize_json`
 * `generate_normalized_json`
