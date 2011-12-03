@@ -71,4 +71,40 @@ describe JsonSpec::Helpers do
       generate_normalized_json(nil).should == %(null)
     end
   end
+  
+  context "load_json_file" do
+    let(:files_root) { File.expand_path("../../../features/support/files", __FILE__) }
+    
+    it "should raise error when no directory set" do
+      expect{ load_json("one.json") }.to raise_error(JsonSpec::MissingDirectoryError)
+    end
+  
+    it "should return JSON when file exists" do
+      File.exist?(files_root).should be_true
+      JsonSpec.directory = files_root
+      load_json("one.json").should == %({"value":"from_file"})
+    end
+    
+    it "should not be affected by extra slash on directory" do
+      JsonSpec.directory = files_root + "/"
+      load_json("one.json").should == %({"value":"from_file"})
+    end
+    it "should raise error when file does not exist" do
+      File.exist?(files_root).should be_true
+      JsonSpec.directory = files_root
+      expect{ load_json("none.json") }.to raise_error(JsonSpec::MissingFileError)
+    end
+    
+    it "should raise error when it's a bad directory" do
+      File.exist?(files_root).should be_true
+      JsonSpec.directory = files_root + "_bad"
+      expect{ load_json("one.json") }.to raise_error(JsonSpec::MissingFileError)
+    end
+    
+    it "should work with nested files" do
+      JsonSpec.directory = files_root
+      load_json("project/one.json").should == %({"nested":"inside_folder"})
+      load_json("project/version/one.json").should == %({"nested":"deeply"})
+    end  
+  end
 end
