@@ -130,6 +130,35 @@ RSpec::Matchers.define :have_json_type do |klass|
   end
 end
 
+RSpec::Matchers.define :have_json_type_boolean do
+  include JsonSpec::Helpers
+
+  match do |json|
+    @json = json
+    actual.kind_of? TrueClass or actual.kind_of? FalseClass
+  end
+
+  chain :at_path do |path|
+    @path = path
+  end
+
+  failure_message_for_should do
+    message = "Expected JSON value type to be a boolean, got #{actual.class}"
+    message << %( at path "#{@path}") if @path
+    message
+  end
+
+  failure_message_for_should_not do
+    message = "Expected JSON value type to not be a boolean, got #{actual.class}"
+    message << %( at path "#{@path}") if @path
+    message
+  end
+
+  def actual
+    parse_json(@json, @path)
+  end
+end
+
 RSpec::Matchers.define :have_json_size do |expected_size|
   include JsonSpec::Helpers
 
