@@ -63,8 +63,9 @@ Also json_spec provides some useful helpers for RSpec tests:
 * `generate_normalized_json`
 
 To start using them add include statement in your Rspec.configure at spec_helper.rb file:
+
     RSpec.configure do |config|
-      include JsonSpec::Helpers
+      config.include JsonSpec::Helpers
     end
 
 Examples of usage this methods you can find in spec/json_spec/helpers_spec.rb
