@@ -1,6 +1,6 @@
 require File.expand_path("../../json_spec", __FILE__)
 
-World(JsonSpec::Helpers)
+World(JsonSpec::Helpers, JsonSpec::Matchers)
 
 After do
   JsonSpec.forget
