@@ -47,9 +47,9 @@ Then /^the (?:JSON|json)(?: response)?(?: at "(.*)")? should have the following:
     path = [base, path].compact.join("/")
 
     if value
-      Then %(the JSON at "#{path}" should be:), value
+      step %(the JSON at "#{path}" should be:), value
     else
-      Then %(the JSON should have "#{path}")
+      step %(the JSON should have "#{path}")
     end
   end
 end
