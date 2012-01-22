@@ -1,5 +1,6 @@
-json_spec
+json_spec [![Build Status](https://secure.travis-ci.org/collectiveidea/json_spec.png)](http://travis-ci.org/collectiveidea/json_spec) [![Dependency Status](https://gemnasium.com/collectiveidea/json_spec.png)](https://gemnasium.com/collectiveidea/json_spec)
 ========
+
 Easily handle JSON in RSpec and Cucumber
 
 Installation
@@ -15,10 +16,6 @@ Documentation
 Please help write documentation!
 
 [http://rdoc.info/gems/json_spec](http://rdoc.info/gems/json_spec)
-
-Continuous Integration
-----------------------
-[![Build Status](https://secure.travis-ci.org/collectiveidea/json_spec.png)](http://travis-ci.org/collectiveidea/json_spec)
 
 RSpec
 --------------
