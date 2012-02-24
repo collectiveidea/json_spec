@@ -1,8 +1,6 @@
 require "spec_helper"
 
 describe "Matchers:" do
-  let(:files_path){ File.expand_path("../../../features/support/files", __FILE__) }
-
   context "be_json_eql" do
     it "matches identical JSON" do
       %({"json":"spec"}).should be_json_eql(%({"json":"spec"}))

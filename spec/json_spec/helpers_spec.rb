@@ -73,8 +73,6 @@ describe JsonSpec::Helpers do
   end
 
   context "load_json_file" do
-    let(:files_path){ File.expand_path("../../../features/support/files", __FILE__) }
-
     it "raises an error when no directory is set" do
       expect{ load_json("one.json") }.to raise_error(JsonSpec::MissingDirectoryError)
     end
