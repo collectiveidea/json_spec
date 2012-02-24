@@ -49,6 +49,12 @@ module JsonSpec
         message
       end
 
+      def description
+        message = "equal JSON"
+        message << %( at path "#{@path}") if @path
+        message
+      end
+
       private
         def scrub(json, path = nil)
           generate_normalized_json(exclude_keys(parse_json(json, path))).chomp + "\n"
@@ -99,6 +105,12 @@ module JsonSpec
         message << %( at path "#{@path}") if @path
         message
       end
+
+      def description
+        message = "include JSON"
+        message << %( at path "#{@path}") if @path
+        message
+      end
     end
 
     class HaveJsonPath
@@ -126,7 +138,7 @@ module JsonSpec
       end
 
       def description
-        "have json path"
+        %(have JSON path "#{@path}")
       end
     end
 
@@ -158,6 +170,12 @@ module JsonSpec
         message << %( at path "#{@path}") if @path
         message
       end
+
+      def description
+        message = %(have JSON type "#{@klass.to_s}")
+        message << %( at path "#{@path}") if @path
+        message
+      end
     end
 
     class HaveJsonSize
@@ -186,6 +204,12 @@ module JsonSpec
 
       def failure_message_for_should_not
         message = "Expected JSON value size to not be #{@expected}, got #{@actual}"
+        message << %( at path "#{@path}") if @path
+        message
+      end
+
+      def description
+        message = %(have JSON size "#{@expected}")
         message << %( at path "#{@path}") if @path
         message
       end
