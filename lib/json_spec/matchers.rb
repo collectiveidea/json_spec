@@ -124,6 +124,10 @@ module JsonSpec
       def failure_message_for_should_not
         %(Expected no JSON path "#{@path}")
       end
+
+      def description
+        "have json path"
+      end
     end
 
     class HaveJsonType
