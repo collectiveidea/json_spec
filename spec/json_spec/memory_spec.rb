@@ -6,8 +6,13 @@ describe JsonSpec::Memory do
   end
 
   it "memorizes strings" do
+    JsonSpec.memorize(:key, "value")
+    JsonSpec.memory.should == {:key => "value"}
+  end
+
+  it "symbolizes keys" do
     JsonSpec.memorize("key", "value")
-    JsonSpec.memory.should == {"key" => "value"}
+    JsonSpec.memory.should == {:key => "value"}
   end
 
   it "regurgitates unremembered strings" do
@@ -15,12 +20,12 @@ describe JsonSpec::Memory do
   end
 
   it "remembers strings" do
-    JsonSpec.memorize("bar", "baz")
+    JsonSpec.memorize(:bar, "baz")
     JsonSpec.remember("foo%{bar}").should == "foobaz"
   end
 
   it "forgets" do
-    JsonSpec.memorize("key", "value")
+    JsonSpec.memorize(:key, "value")
     JsonSpec.forget
     JsonSpec.memory.should == {}
   end
