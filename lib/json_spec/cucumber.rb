@@ -79,11 +79,10 @@ Then /^the (?:JSON|json)(?: response)? should( not)? have "(.*)"$/ do |negative,
 end
 
 Then /^the (?:JSON|json)(?: response)?(?: at "(.*)")? should( not)? be an? (.*)$/ do |path, negative, type|
-  klass = Module.const_get(type.gsub(/^./){|x| x.upcase })
   if negative
-    last_json.should_not have_json_type(klass).at_path(path)
+    last_json.should_not have_json_type(type).at_path(path)
   else
-    last_json.should have_json_type(klass).at_path(path)
+    last_json.should have_json_type(type).at_path(path)
   end
 end
 
