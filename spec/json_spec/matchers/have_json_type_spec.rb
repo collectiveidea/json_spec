@@ -2,7 +2,9 @@ require "spec_helper"
 
 describe JsonSpec::Matchers::HaveJsonType do
   it "matches hashes" do
-    %({}).should have_json_type(Hash)
+    hash = %({})
+    hash.should have_json_type(Hash)
+    hash.should have_json_type(:object)
   end
 
   it "matches arrays" do
@@ -32,6 +34,11 @@ describe JsonSpec::Matchers::HaveJsonType do
   it "matches floats" do
     %(10.0).should have_json_type(Float)
     %(1e+1).should have_json_type(Float)
+  end
+
+  it "matches booleans" do
+    %(true).should have_json_type(:boolean)
+    %(false).should have_json_type(:boolean)
   end
 
   it "matches ancestor classes" do
@@ -73,7 +80,10 @@ describe JsonSpec::Matchers::HaveJsonType do
     end
 
     it "matches null" do
-      %(null).should have_json_type(NilClass)
+      null = %(null)
+      null.should have_json_type(NilClass)
+      null.should have_json_type(:nil)
+      null.should have_json_type(:null)
     end
   end
 end
