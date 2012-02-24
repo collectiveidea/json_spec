@@ -3,13 +3,13 @@ module JsonSpec
     class HaveJsonType
       include JsonSpec::Helpers
 
-      def initialize(klass)
-        @klass = klass
+      def initialize(type)
+        @classes = type_to_classes(type)
       end
 
       def matches?(json)
         @ruby = parse_json(json, @path)
-        @ruby.is_a?(@klass)
+        @classes.any?{|c| c === @ruby }
       end
 
       def at_path(path)
@@ -18,22 +18,37 @@ module JsonSpec
       end
 
       def failure_message_for_should
-        message = "Expected JSON value type to be #{@klass}, got #{@ruby.class}"
+        message = "Expected JSON value type to be #{@classes.join(", ")}, got #{@ruby.class}"
         message << %( at path "#{@path}") if @path
         message
       end
 
       def failure_message_for_should_not
-        message = "Expected JSON value type to not be #{@klass}, got #{@ruby.class}"
+        message = "Expected JSON value type to not be #{@classes.join(", ")}, got #{@ruby.class}"
         message << %( at path "#{@path}") if @path
         message
       end
 
       def description
-        message = %(have JSON type "#{@klass}")
+        message = %(have JSON type "#{@classes.join(", ")}")
         message << %( at path "#{@path}") if @path
         message
       end
+
+      private
+        def type_to_classes(type)
+          case type
+          when Class then [type]
+          when Array then type.map{|t| type_to_classes(t) }.flatten
+          else
+            case type.to_s.downcase
+            when "boolean"     then [TrueClass, FalseClass]
+            when "object"      then [Hash]
+            when "nil", "null" then [NilClass]
+            else [Module.const_get(type.to_s.capitalize)]
+            end
+          end
+        end
     end
   end
 end

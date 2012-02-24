@@ -18,8 +18,8 @@ module JsonSpec
       JsonSpec::Matchers::HaveJsonPath.new(path)
     end
 
-    def have_json_type(klass)
-      JsonSpec::Matchers::HaveJsonType.new(klass)
+    def have_json_type(type)
+      JsonSpec::Matchers::HaveJsonType.new(type)
     end
 
     def have_json_size(size)

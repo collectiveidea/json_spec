@@ -9,7 +9,7 @@ module JsonSpec
 
       def matches?(json)
         ruby = parse_json(json, @path)
-        @actual = ruby.is_a?(Enumerable) ? ruby.size : 1
+        @actual = Enumerable === ruby ? ruby.size : 1
         @actual == @expected
       end
 
