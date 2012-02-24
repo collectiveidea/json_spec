@@ -86,6 +86,18 @@ describe "Matchers:" do
       JsonSpec.excluded_keys = %w(id json)
       %({"id":1,"json":"spec"}).should_not be_json_eql(%({"id":2,"json":"different"})).including(:id, :json)
     end
+
+    it "provide a description message" do
+      matcher = be_json_eql(%({"id":2,"json":"spec"}))
+      matcher.matches?(%({"id":1,"json":"spec"}))
+      matcher.description.should == "equal JSON"
+    end
+
+    it "provide a description message with path" do
+      matcher = be_json_eql(%({"id":1,"json":["spec"]})).at_path("json/0")
+      matcher.matches?(%({"id":1,"json":["spec"]}))
+      matcher.description.should == %(equal JSON at path "json/0")
+    end
   end
 
   context "include_json" do
@@ -140,6 +152,18 @@ describe "Matchers:" do
     it "ignores excluded keys" do
       %([{"id":1,"two":3}]).should include_json(%({"two":3}))
     end
+
+    it "provide a description message" do
+      matcher = include_json(%({"json":"spec"}))
+      matcher.matches?(%({"id":1,"json":"spec"}))
+      matcher.description.should == "include JSON"
+    end
+
+    it "provide a description message with path" do
+      matcher = include_json(%("spec")).at_path("json/0")
+      matcher.matches?(%({"id":1,"json":["spec"]}))
+      matcher.description.should == %(include JSON at path "json/0")
+    end
   end
 
   context "have_json_size" do
@@ -174,6 +198,18 @@ describe "Matchers:" do
       matcher.matches?(%([1,2,3]))
       matcher.failure_message_for_should_not.should == "Expected JSON value size to not be 3, got 3"
     end
+
+    it "provide a description message" do
+      matcher = have_json_size(1)
+      matcher.matches?(%({"id":1,"json":["spec"]}))
+      matcher.description.should == %(have JSON size "1")
+    end
+
+    it "provide a description message with path" do
+      matcher = have_json_size(1).at_path("json")
+      matcher.matches?(%({"id":1,"json":["spec"]}))
+      matcher.description.should == %(have JSON size "1" at path "json")
+    end
   end
 
   context "have_json_path" do
@@ -196,6 +232,13 @@ describe "Matchers:" do
     it "matches hash keys and array indexes" do
       %({"one":[1,2,{"three":4}]}).should have_json_path("one/2/three")
     end
+
+    it "provide a description message" do
+      matcher = have_json_path("json")
+      matcher.matches?(%({"id":1,"json":"spec"}))
+      matcher.description.should == %(have JSON path "json")
+    end
+
   end
 
   context "have_json_type" do
@@ -247,6 +290,18 @@ describe "Matchers:" do
       matcher = have_json_type(Numeric)
       matcher.matches?(%(10))
       matcher.failure_message_for_should_not.should == "Expected JSON value type to not be Numeric, got Fixnum"
+    end
+
+    it "provide a description message" do
+      matcher = have_json_type(String)
+      matcher.matches?(%({"id":1,"json":"spec"}))
+      matcher.description.should == %(have JSON type "String")
+    end
+
+    it "provide a description message with path" do
+      matcher = have_json_type(String).at_path("json")
+      matcher.matches?(%({"id":1,"json":"spec"}))
+      matcher.description.should == %(have JSON type "String" at path "json")
     end
 
     context "somewhat uselessly" do
