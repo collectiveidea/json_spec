@@ -1,26 +1,22 @@
-# -*- encoding: utf-8 -*-
-$:.push File.expand_path("../lib", __FILE__)
-require "json_spec/version"
+# encoding: utf-8
 
-Gem::Specification.new do |s|
-  s.name        = "json_spec"
-  s.version     = JsonSpec::VERSION
-  s.authors     = ["Steve Richert"]
-  s.email       = ["steve.richert@gmail.com"]
-  s.homepage    = "https://github.com/collectiveidea/json_spec"
-  s.summary     = "Easily handle JSON in RSpec and Cucumber"
-  s.description = "Easily handle JSON in RSpec and Cucumber"
+Gem::Specification.new do |gem|
+  gem.name    = "json_spec"
+  gem.version = "0.8.1"
 
-  s.rubyforge_project = "json_spec"
+  gem.authors     = ["Steve Richert"]
+  gem.email       = ["steve.richert@gmail.com"]
+  gem.summary     = "Easily handle JSON in RSpec and Cucumber"
+  gem.description = "Easily handle JSON in RSpec and Cucumber"
+  gem.homepage    = "https://github.com/collectiveidea/json_spec"
 
-  s.files         = `git ls-files`.split("\n")
-  s.test_files    = `git ls-files -- {test,spec,features}/*`.split("\n")
-  s.executables   = `git ls-files -- bin/*`.split("\n").map{|f| File.basename(f) }
-  s.require_paths = ["lib"]
+  gem.add_dependency "multi_json", "~> 1.0"
+  gem.add_dependency "rspec",      "~> 2.0"
 
-  s.add_dependency "multi_json", "~> 1.0"
-  s.add_dependency "rspec", "~> 2.0"
+  gem.add_development_dependency "cucumber", "~> 1.1", ">= 1.1.1"
+  gem.add_development_dependency "rake",     "~> 0.9"
 
-  s.add_development_dependency "rake", "~> 0.9"
-  s.add_development_dependency "cucumber", "~> 1.1", ">= 1.1.1"
+  gem.files         = `git ls-files`.split("\n")
+  gem.test_files    = `git ls-files -- {spec,features}/*`.split("\n")
+  gem.require_paths = ["lib"]
 end
