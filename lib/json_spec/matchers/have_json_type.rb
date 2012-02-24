@@ -30,7 +30,7 @@ module JsonSpec
       end
 
       def description
-        message = %(have JSON type "#{@klass.to_s}")
+        message = %(have JSON type "#{@klass}")
         message << %( at path "#{@path}") if @path
         message
       end
