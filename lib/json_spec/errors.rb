@@ -1,5 +1,8 @@
 module JsonSpec
-  class MissingPathError < StandardError
+  class Error < StandardError
+  end
+
+  class MissingPath < Error
     attr_reader :path
 
     def initialize(path)
@@ -11,13 +14,13 @@ module JsonSpec
     end
   end
 
-  class MissingDirectoryError < StandardError
+  class MissingDirectory < Error
     def to_s
       "No JsonSpec.directory set"
     end
   end
 
-  class MissingFileError < StandardError
+  class MissingFile < Error
     attr_reader :path
 
     def initialize(path)

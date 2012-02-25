@@ -25,7 +25,7 @@ describe JsonSpec::Helpers do
     it "raises an error for a missing path" do
       json = %({"json":["spec"]})
       %w(spec json/1).each do |path|
-        expect{ parse_json(json, path) }.to raise_error(JsonSpec::MissingPathError)
+        expect{ parse_json(json, path) }.to raise_error(JsonSpec::MissingPath)
       end
     end
   end
@@ -74,7 +74,7 @@ describe JsonSpec::Helpers do
 
   context "load_json_file" do
     it "raises an error when no directory is set" do
-      expect{ load_json("one.json") }.to raise_error(JsonSpec::MissingDirectoryError)
+      expect{ load_json("one.json") }.to raise_error(JsonSpec::MissingDirectory)
     end
 
     it "returns JSON when the file exists" do
@@ -89,12 +89,12 @@ describe JsonSpec::Helpers do
 
     it "raises an error when the file doesn't exist" do
       JsonSpec.directory = files_path
-      expect{ load_json("bogus.json") }.to raise_error(JsonSpec::MissingFileError)
+      expect{ load_json("bogus.json") }.to raise_error(JsonSpec::MissingFile)
     end
 
     it "raises an error when the directory doesn't exist" do
       JsonSpec.directory = "#{files_path}_bogus"
-      expect{ load_json("one.json") }.to raise_error(JsonSpec::MissingFileError)
+      expect{ load_json("one.json") }.to raise_error(JsonSpec::MissingFile)
     end
 
     it "finds nested files" do

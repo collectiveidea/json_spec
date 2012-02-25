@@ -47,15 +47,15 @@ module JsonSpec
       end
 
       def missing_json_path!(path)
-        raise JsonSpec::MissingPathError.new(path)
+        raise JsonSpec::MissingPath.new(path)
       end
 
       def missing_json_directory!
-        raise JsonSpec::MissingDirectoryError
+        raise JsonSpec::MissingDirectory
       end
 
       def missing_json_file!(path)
-        raise JsonSpec::MissingFileError.new(path)
+        raise JsonSpec::MissingFile.new(path)
       end
   end
 end

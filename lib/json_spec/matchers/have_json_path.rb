@@ -8,12 +8,10 @@ module JsonSpec
       end
 
       def matches?(json)
-        begin
-          parse_json(json, @path)
-          true
-        rescue JsonSpec::MissingPathError
-          false
-        end
+        parse_json(json, @path)
+        true
+      rescue JsonSpec::MissingPath
+        false
       end
 
       def failure_message_for_should
