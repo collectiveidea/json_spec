@@ -3,6 +3,7 @@ module JsonSpec
     class IncludeJson
       include JsonSpec::Helpers
       include JsonSpec::Exclusion
+      include JsonSpec::Messages
 
       def initialize(expected_json = nil)
         @expected_json = expected_json
@@ -41,21 +42,15 @@ module JsonSpec
       end
 
       def failure_message_for_should
-        message = "Expected included JSON"
-        message << %( at path "#{@path}") if @path
-        message
+        message_with_path("Expected included JSON")
       end
 
       def failure_message_for_should_not
-        message = "Expected excluded JSON"
-        message << %( at path "#{@path}") if @path
-        message
+        message_with_path("Expected excluded JSON")
       end
 
       def description
-        message = "include JSON"
-        message << %( at path "#{@path}") if @path
-        message
+        message_with_path("include JSON")
       end
     end
   end

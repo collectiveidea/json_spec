@@ -2,6 +2,7 @@ module JsonSpec
   module Matchers
     class HaveJsonType
       include JsonSpec::Helpers
+      include JsonSpec::Messages
 
       def initialize(type)
         @classes = type_to_classes(type)
@@ -18,21 +19,15 @@ module JsonSpec
       end
 
       def failure_message_for_should
-        message = "Expected JSON value type to be #{@classes.join(", ")}, got #{@ruby.class}"
-        message << %( at path "#{@path}") if @path
-        message
+        message_with_path("Expected JSON value type to be #{@classes.join(", ")}, got #{@ruby.class}")
       end
 
       def failure_message_for_should_not
-        message = "Expected JSON value type to not be #{@classes.join(", ")}, got #{@ruby.class}"
-        message << %( at path "#{@path}") if @path
-        message
+        message_with_path("Expected JSON value type to not be #{@classes.join(", ")}, got #{@ruby.class}")
       end
 
       def description
-        message = %(have JSON type "#{@classes.join(", ")}")
-        message << %( at path "#{@path}") if @path
-        message
+        message_with_path(%(have JSON type "#{@classes.join(", ")}"))
       end
 
       private

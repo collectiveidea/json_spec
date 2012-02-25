@@ -3,6 +3,7 @@ module JsonSpec
     class BeJsonEql
       include JsonSpec::Helpers
       include JsonSpec::Exclusion
+      include JsonSpec::Messages
 
       attr_reader :expected, :actual
 
@@ -42,21 +43,15 @@ module JsonSpec
       end
 
       def failure_message_for_should
-        message = "Expected equivalent JSON"
-        message << %( at path "#{@path}") if @path
-        message
+        message_with_path("Expected equivalent JSON")
       end
 
       def failure_message_for_should_not
-        message = "Expected inequivalent JSON"
-        message << %( at path "#{@path}") if @path
-        message
+        message_with_path("Expected inequivalent JSON")
       end
 
       def description
-        message = "equal JSON"
-        message << %( at path "#{@path}") if @path
-        message
+        message_with_path("equal JSON")
       end
 
       private

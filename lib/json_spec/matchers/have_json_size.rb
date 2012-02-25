@@ -2,6 +2,7 @@ module JsonSpec
   module Matchers
     class HaveJsonSize
       include JsonSpec::Helpers
+      include JsonSpec::Messages
 
       def initialize(size)
         @expected = size
@@ -19,21 +20,15 @@ module JsonSpec
       end
 
       def failure_message_for_should
-        message = "Expected JSON value size to be #{@expected}, got #{@actual}"
-        message << %( at path "#{@path}") if @path
-        message
+        message_with_path("Expected JSON value size to be #{@expected}, got #{@actual}")
       end
 
       def failure_message_for_should_not
-        message = "Expected JSON value size to not be #{@expected}, got #{@actual}"
-        message << %( at path "#{@path}") if @path
-        message
+        message_with_path("Expected JSON value size to not be #{@expected}, got #{@actual}")
       end
 
       def description
-        message = %(have JSON size "#{@expected}")
-        message << %( at path "#{@path}") if @path
-        message
+        message_with_path(%(have JSON size "#{@expected}"))
       end
     end
   end
