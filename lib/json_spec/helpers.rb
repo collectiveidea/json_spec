@@ -1,4 +1,4 @@
-require 'multi_json'
+require "multi_json"
 
 module JsonSpec
   module Helpers

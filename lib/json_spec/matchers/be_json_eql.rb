@@ -32,12 +32,12 @@ module JsonSpec
       end
 
       def excluding(*keys)
-        excluded_keys.merge(keys.map{|k| k.to_s })
+        excluded_keys.merge(keys.map(&:to_s))
         self
       end
 
       def including(*keys)
-        excluded_keys.subtract(keys.map{|k| k.to_s })
+        excluded_keys.subtract(keys.map(&:to_s))
         self
       end
 

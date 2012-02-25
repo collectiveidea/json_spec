@@ -13,7 +13,7 @@ module JsonSpec
     end
 
     def excluded_keys=(keys)
-      @excluded_keys = keys.map{|k| k.to_s }.uniq
+      @excluded_keys = keys.map(&:to_s).uniq
     end
 
     def exclude_keys(*keys)
@@ -29,7 +29,7 @@ module JsonSpec
     end
 
     def reset
-      instance_variables.each{|iv| remove_instance_variable(iv) }
+      instance_variables.each{|ivar| remove_instance_variable(ivar) }
     end
   end
 end
