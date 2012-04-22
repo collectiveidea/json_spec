@@ -1,7 +1,6 @@
+language: ruby
+branches: master
 rvm:
   - 1.9.2
   - 1.9.3
   - ruby-head
-notifications:
-  email:
-    - steve.richert@gmail.com
