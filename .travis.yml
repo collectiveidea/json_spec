@@ -4,3 +4,6 @@ rvm:
   - 1.9.2
   - 1.9.3
   - ruby-head
+gemfile:
+  - gemfiles/multi_json_1_0.gemfile
+  - gemfiles/multi_json_1_3.gemfile
