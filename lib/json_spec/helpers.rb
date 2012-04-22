@@ -5,10 +5,10 @@ module JsonSpec
     extend self
 
     def parse_json(json, path = nil)
-      ruby = MultiJson.load(%([#{json}])).first
+      ruby = multi_json_load("[#{json}]").first
       value_at_json_path(ruby, path)
     rescue MultiJson::DecodeError
-      MultiJson.load(json)
+      multi_json_load(json)
     end
 
     def normalize_json(json, path = nil)
@@ -31,6 +31,10 @@ module JsonSpec
     end
 
     private
+      def multi_json_load(json)
+        MultiJson.respond_to?(:load) ? MultiJson.load(json) : MultiJson.decode(json)
+      end
+
       def value_at_json_path(ruby, path)
         return ruby unless path
 
