@@ -13,6 +13,7 @@ Gem::Specification.new do |gem|
   gem.add_dependency "multi_json", ">= 1.3.0"
   gem.add_dependency "rspec", "~> 2.0"
 
+  gem.add_development_dependency "appraisal", "~> 0.4"
   gem.add_development_dependency "cucumber", "~> 1.1", ">= 1.1.1"
   gem.add_development_dependency "rake", "~> 0.9"
 
