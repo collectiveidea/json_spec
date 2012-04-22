@@ -10,7 +10,7 @@ Gem::Specification.new do |gem|
   gem.description = gem.summary
   gem.homepage    = "https://github.com/collectiveidea/json_spec"
 
-  gem.add_dependency "multi_json", ">= 1.3.0"
+  gem.add_dependency "multi_json", "~> 1.0"
   gem.add_dependency "rspec", "~> 2.0"
 
   gem.add_development_dependency "appraisal", "~> 0.4"
