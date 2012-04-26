@@ -32,7 +32,7 @@ module JsonSpec
 
     private
       def multi_json_load(json)
-        MultiJson.respond_to?(:load) ? MultiJson.load(json) : MultiJson.decode(json)
+        MultiJson.decode(json)
       end
 
       def value_at_json_path(ruby, path)
