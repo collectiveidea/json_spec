@@ -2,7 +2,7 @@
 
 Gem::Specification.new do |gem|
   gem.name    = "json_spec"
-  gem.version = "1.0.2"
+  gem.version = "1.0.3"
 
   gem.authors     = ["Steve Richert"]
   gem.email       = ["steve.richert@gmail.com"]
