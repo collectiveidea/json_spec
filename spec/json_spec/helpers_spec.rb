@@ -28,6 +28,11 @@ describe JsonSpec::Helpers do
         expect{ parse_json(json, path) }.to raise_error(JsonSpec::MissingPath)
       end
     end
+
+    it "parses at a numeric string path" do
+      json = %({"1":"two"})
+      parse_json(%({"1":"two"}), "1").should == "two"
+    end
   end
 
   context "normalize_json" do

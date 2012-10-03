@@ -34,16 +34,17 @@ module JsonSpec
       def value_at_json_path(ruby, path)
         return ruby unless path
 
-        json_path_to_keys(path).inject(ruby) do |value, key|
+        path.split("/").inject(ruby) do |value, key|
           case value
-          when Hash, Array then value.fetch(key){ missing_json_path!(path) }
-          else missing_json_path!(path)
+          when Hash
+            value.fetch(key){ missing_json_path!(path) }
+          when Array
+            missing_json_path!(path) unless key =~ /^\d+$/
+            value.fetch(key.to_i){ missing_json_path!(path) }
+          else
+            missing_json_path!(path)
           end
         end
-      end
-
-      def json_path_to_keys(path)
-        path.split("/").map{|k| k =~ /^\d+$/ ? k.to_i : k }
       end
 
       def missing_json_path!(path)
