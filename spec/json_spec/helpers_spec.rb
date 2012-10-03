@@ -28,6 +28,11 @@ describe JsonSpec::Helpers do
         expect{ parse_json(json, path) }.to raise_error(JsonSpec::MissingPath)
       end
     end
+
+    it "does not parse when not a string" do
+      json = { :json => ["spec"] }
+      parse_json( json ).should == json
+    end
   end
 
   context "normalize_json" do

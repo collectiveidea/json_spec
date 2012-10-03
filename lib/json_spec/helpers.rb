@@ -5,7 +5,7 @@ module JsonSpec
     extend self
 
     def parse_json(json, path = nil)
-      ruby = MultiJson.decode("[#{json}]").first
+      ruby = json.is_a?(String) ? MultiJson.decode("[#{json}]").first : json
       value_at_json_path(ruby, path)
     rescue MultiJson::DecodeError
       MultiJson.decode(json)
