@@ -86,13 +86,13 @@ describe JsonSpec::Matchers::BeJsonEql do
     %({"id":1,"json":"spec"}).should_not be_json_eql(%({"id":2,"json":"different"})).including(:id, :json)
   end
 
-  it "provide a description message" do
+  it "provides a description message" do
     matcher = be_json_eql(%({"id":2,"json":"spec"}))
     matcher.matches?(%({"id":1,"json":"spec"}))
     matcher.description.should == "equal JSON"
   end
 
-  it "provide a description message with path" do
+  it "provides a description message with path" do
     matcher = be_json_eql(%({"id":1,"json":["spec"]})).at_path("json/0")
     matcher.matches?(%({"id":1,"json":["spec"]}))
     matcher.description.should == %(equal JSON at path "json/0")

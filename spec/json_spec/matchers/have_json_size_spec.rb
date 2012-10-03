@@ -33,13 +33,13 @@ describe JsonSpec::Matchers::HaveJsonSize do
     matcher.failure_message_for_should_not.should == "Expected JSON value size to not be 3, got 3"
   end
 
-  it "provide a description message" do
+  it "provides a description message" do
     matcher = have_json_size(1)
     matcher.matches?(%({"id":1,"json":["spec"]}))
     matcher.description.should == %(have JSON size "1")
   end
 
-  it "provide a description message with path" do
+  it "provides a description message with path" do
     matcher = have_json_size(1).at_path("json")
     matcher.matches?(%({"id":1,"json":["spec"]}))
     matcher.description.should == %(have JSON size "1" at path "json")

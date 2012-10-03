@@ -58,13 +58,13 @@ describe JsonSpec::Matchers::HaveJsonType do
     matcher.failure_message_for_should_not.should == "Expected JSON value type to not be Numeric, got Fixnum"
   end
 
-  it "provide a description message" do
+  it "provides a description message" do
     matcher = have_json_type(String)
     matcher.matches?(%({"id":1,"json":"spec"}))
     matcher.description.should == %(have JSON type "String")
   end
 
-  it "provide a description message with path" do
+  it "provides a description message with path" do
     matcher = have_json_type(String).at_path("json")
     matcher.matches?(%({"id":1,"json":"spec"}))
     matcher.description.should == %(have JSON type "String" at path "json")

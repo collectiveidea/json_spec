@@ -23,7 +23,7 @@ describe JsonSpec::Matchers::IncludeJson do
     json.should include_json(%({"two":2}))
   end
 
-  it "matches include hash values" do
+  it "matches included hash values" do
     json = %({"string":"one","integer":1,"float":1.0,"true":true,"false":false,"null":null})
     json.should include_json(%("one"))
     json.should include_json(%(1))
@@ -53,13 +53,13 @@ describe JsonSpec::Matchers::IncludeJson do
     %([{"id":1,"two":3}]).should include_json(%({"two":3}))
   end
 
-  it "provide a description message" do
+  it "provides a description message" do
     matcher = include_json(%({"json":"spec"}))
     matcher.matches?(%({"id":1,"json":"spec"}))
     matcher.description.should == "include JSON"
   end
 
-  it "provide a description message with path" do
+  it "provides a description message with path" do
     matcher = include_json(%("spec")).at_path("json/0")
     matcher.matches?(%({"id":1,"json":["spec"]}))
     matcher.description.should == %(include JSON at path "json/0")
