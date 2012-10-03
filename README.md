@@ -313,7 +313,7 @@ Then the JSON response at "0/first_name" should be %{FIRST_NAME}
 ### More
 
 Check out the [specs](https://github.com/collectiveidea/json_spec/blob/master/spec)
-and [features](https://github.com/collectiveidea/json_spec/blob/master/features) too see all the
+and [features](https://github.com/collectiveidea/json_spec/blob/master/features) to see all the
 various ways you can use json_spec.
 
 Contributing
