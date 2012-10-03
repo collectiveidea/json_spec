@@ -17,6 +17,7 @@ module JsonSpec
         case actual
         when Hash then actual.values.map{|v| exclude_keys(v) }.include?(expected)
         when Array then actual.map{|e| exclude_keys(e) }.include?(expected)
+        when String then actual.include?(expected)
         else false
         end
       end

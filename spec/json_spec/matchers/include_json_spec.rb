@@ -45,6 +45,12 @@ describe JsonSpec::Matchers::IncludeJson do
     json.should include_json(%([5,6]))
   end
 
+  it "matches a substring" do
+    json = %("json")
+    json.should include_json(%("js"))
+    json.should include_json(%("json"))
+  end
+
   it "matches at a path" do
     %({"one":{"two":[3,4]}}).should include_json(%([3,4])).at_path("one")
   end
