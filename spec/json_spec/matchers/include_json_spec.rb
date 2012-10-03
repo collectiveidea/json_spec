@@ -45,8 +45,18 @@ describe JsonSpec::Matchers::IncludeJson do
     json.should include_json(%([5,6]))
   end
 
-  it "matches at a path" do
+  it "matches a hash at a path" do
     %({"one":{"two":[3,4]}}).should include_json(%([3,4])).at_path("one")
+  end
+
+  it "matches an array of elements at a path" do
+    json = %({"one":[2,3],"four":[5,6]})
+    json.should include_json(%([2,3])).at_path "one"
+    json.should include_json(%([5,6])).at_path "four"
+  end
+
+  it "matches an array of hashes at a path" do
+    %({"one":1,"two":[{"three":3},{"four":4}]}).should include_json(%([{"three":3},{"four":4}])).at_path("two")
   end
 
   it "ignores excluded keys" do
