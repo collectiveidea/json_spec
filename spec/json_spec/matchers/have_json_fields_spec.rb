@@ -9,9 +9,11 @@ describe JsonSpec::Matchers::HaveJsonFields do
 
   it "fails for non-complete set of fields" do
     %({"a": "a", "b": "b"}).should_not have_json_fields(%w(a b c))
+    %({"a": "a", "b": "b"}).should_not have_json_fields([:a, :b, :c])
   end
 
   it "matches complete set of fields" do
     %({"a": "a", "b": "b", "c": "c"}).should have_json_fields(%w(a b c))
+    %({"a": "a", "b": "b", "c": "c"}).should have_json_fields([:a, :b, :c])
   end
 end
