@@ -11,7 +11,7 @@ module JsonSpec
       def matches?(json)
         @data = parse_json(json, @path)
         return false unless @data.is_a?(Hash)
-        !@fields.map{|f| @data.has_key?(f)}.include?(false)
+        !@fields.map{|f| @data.has_key?(f.to_s)}.include?(false)
       end
 
       def at_path(path)
