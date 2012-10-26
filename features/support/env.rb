@@ -1,5 +1,6 @@
 $: << File.expand_path("../../../lib", __FILE__)
 
+require "rspec"
 require "json_spec/cucumber"
 
 JsonSpec.directory = File.expand_path("../../../spec/support/files", __FILE__)
