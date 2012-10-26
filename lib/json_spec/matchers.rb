@@ -28,6 +28,8 @@ module JsonSpec
   end
 end
 
-RSpec.configure do |config|
-  config.include JsonSpec::Matchers
+if defined?(RSpec)
+  RSpec.configure do |config|
+    config.include JsonSpec::Matchers
+  end
 end

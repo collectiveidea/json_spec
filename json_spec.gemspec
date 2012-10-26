@@ -11,8 +11,8 @@ Gem::Specification.new do |gem|
   gem.homepage    = "https://github.com/collectiveidea/json_spec"
 
   gem.add_dependency "multi_json", "~> 1.0"
-  gem.add_dependency "rspec", "~> 2.0"
 
+  gem.add_development_dependency "rspec", "~> 2.0"
   gem.add_development_dependency "cucumber", "~> 1.1", ">= 1.1.1"
   gem.add_development_dependency "rake", "~> 0.9"
 
