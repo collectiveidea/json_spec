@@ -25,6 +25,14 @@ module JsonSpec
     def have_json_size(size)
       JsonSpec::Matchers::HaveJsonSize.new(size)
     end
+
+    def self.included base
+      if base.respond_to? :register_matcher
+        instance_methods.each do |name|
+          base.register_matcher name, name
+        end
+      end
+    end
   end
 end
 
