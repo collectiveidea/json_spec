@@ -27,8 +27,8 @@ module JsonSpec
       JsonSpec::Matchers::HaveJsonSize.new(size)
     end
 
-    def have_json_fields(size)
-      JsonSpec::Matchers::HaveJsonFields.new(size)
+    def have_json_fields(fields)
+      JsonSpec::Matchers::HaveJsonFields.new(fields)
     end
   end
 end
