@@ -1,3 +1,4 @@
+require "rspec"
 require "json_spec"
 
 RSpec.configure do |config|
