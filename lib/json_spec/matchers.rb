@@ -3,7 +3,7 @@ require "json_spec/matchers/include_json"
 require "json_spec/matchers/have_json_path"
 require "json_spec/matchers/have_json_type"
 require "json_spec/matchers/have_json_size"
-require "json_spec/matchers/have_json_fields"
+require "json_spec/matchers/have_json_keys"
 
 module JsonSpec
   module Matchers
@@ -27,8 +27,8 @@ module JsonSpec
       JsonSpec::Matchers::HaveJsonSize.new(size)
     end
 
-    def have_json_fields(fields)
-      JsonSpec::Matchers::HaveJsonFields.new(fields)
+    def have_json_keys(*keys)
+      JsonSpec::Matchers::HaveJsonKeys.new(keys.flatten)
     end
   end
 end
