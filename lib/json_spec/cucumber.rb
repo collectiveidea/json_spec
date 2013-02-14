@@ -88,8 +88,9 @@ Then /^the (?:JSON|json)(?: response)? should( not)? have "(.*)"$/ do |negative,
   end
 end
 
-Then /^the (?:JSON|json)(?: response)?(?: at "(.*)")? should( not)? have keys "(.*)"$/ do |base, negative, keys|
-  match = have_json_keys(keys.split(',').map(&:strip))
+Then /^the (?:JSON|json)(?: response)?(?: at "(.*)")? should( not)? have keys (.*)$/ do |base, negative, keys|
+  keys = eval("[#{keys}]")
+  match = have_json_keys(keys)
   match = match.at_path(base) if base
   if negative
     last_json.should_not match
