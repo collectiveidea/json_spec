@@ -59,7 +59,7 @@ Then /^the (?:JSON|json)(?: response)?(?: at "(.*)")? should( not)? include (".*
 end
 
 Then /^the (?:JSON|json)(?: response)?(?: at "(.*)")? should have the following:$/ do |base, table|
-  table.rows.each do |path, value|
+  table.raw.each do |path, value|
     path = [base, path].compact.join("/")
 
     if value
