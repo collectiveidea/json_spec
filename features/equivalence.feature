@@ -253,10 +253,10 @@ Feature: Equivalence
       | true        | true                  |
       | updated_at  | "2011-07-08 02:28:50" |
     And the JSON at "array" should have the following:
-      | 0       | "json" |
-      | 1       | "spec" |
+      | 0 | "json" |
+      | 1 | "spec" |
     And the JSON at "hash" should have the following:
-      | json    | "spec" |
+      | json | "spec" |
 
   @fail
   Scenario: Table format can fail equivalence
