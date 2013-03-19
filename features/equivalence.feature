@@ -257,3 +257,30 @@ Feature: Equivalence
       | 1 | "spec" |
     And the JSON at "hash" should have the following:
       | json | "spec" |
+
+  @fail
+  Scenario: Table format can fail equivalence
+    When I get the JSON
+    Then the JSON should have the following:
+      | array       | ["bad","garbage"]     |
+      | array/0     | "json"                |
+      | array/1     | "spec"                |
+      | created_at  | "2011-07-08 02:27:34" |
+      | empty_array | []                    |
+      | empty_hash  | {}                    |
+      | false       | false                 |
+      | float       | 10.0                  |
+      | hash        | {"json":"spec"}       |
+      | hash/json   | "spec"                |
+      | id          | 1                     |
+      | integer     | 10                    |
+      | negative    | -10                   |
+      | null        | null                  |
+      | string      | "json_spec"           |
+      | true        | true                  |
+      | updated_at  | "2011-07-08 02:28:50" |
+    And the JSON at "array" should have the following:
+      | should | "fail" |
+      | 1      | "spec" |
+    And the JSON at "hash" should have the following:
+      | random | "junk" |
