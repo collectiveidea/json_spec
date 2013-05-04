@@ -15,11 +15,26 @@ module JsonSpec
         actual = parse_json(actual_json, @path)
         expected = exclude_keys(parse_json(@expected_json))
         case actual
-        when Hash then actual.values.map{|v| exclude_keys(v) }.include?(expected)
-        when Array then actual.map{|e| exclude_keys(e) }.include?(expected)
-        when String then actual.include?(expected)
+        when Hash then match_hash(actual, expected)
+        when Array then match_array(actual, expected)
+        when String then match_string(actual, expected)
         else false
         end
+      end
+
+
+      def match_hash(actual, expected)
+        actual.values.map{|v| exclude_keys(v) }.include?(expected)
+      end
+
+      def match_array(actual, expected)
+        actual.each do |e|
+          match_hash(exclude_keys(e), expected) if e.is_a?(Hash)
+        end || actual.map{|e| exclude_keys(e) }.include?(expected)
+      end
+
+      def match_string(actual, expected)
+        actual.include?(expected)
       end
 
       def at_path(path)

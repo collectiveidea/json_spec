@@ -23,6 +23,14 @@ describe JsonSpec::Matchers::IncludeJson do
     json.should include_json(%({"two":2}))
   end
 
+  it "matches included hash elements inside an array" do
+    json = %([{"one":1, "name": "user1"},{"two":2, "name": "user2"}])
+    json.should include_json(%({"name":"user1"}))
+    json.should include_json(%({"name":"user2"}))
+    json.should include_json(%({"one":1}))
+    json.should include_json(%({"two":2}))
+  end
+
   it "matches included hash values" do
     json = %({"string":"one","integer":1,"float":1.0,"true":true,"false":false,"null":null})
     json.should include_json(%("one"))
