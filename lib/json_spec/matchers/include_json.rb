@@ -28,9 +28,8 @@ module JsonSpec
       end
 
       def match_array(actual, expected)
-        actual.each do |e|
-          match_hash(exclude_keys(e), expected) if e.is_a?(Hash)
-        end || actual.map{|e| exclude_keys(e) }.include?(expected)
+        actual.map{|e| match_hash(e, expected) if e.is_a?(Hash)}.include?(true) ||
+        actual.map{|e| e }.include?(expected)
       end
 
       def match_string(actual, expected)
