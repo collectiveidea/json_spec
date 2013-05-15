@@ -14,12 +14,36 @@ module JsonSpec
 
         actual = parse_json(actual_json, @path)
         expected = exclude_keys(parse_json(@expected_json))
-        case actual
-        when Hash then actual.values.map{|v| exclude_keys(v) }.include?(expected)
-        when Array then actual.map{|e| exclude_keys(e) }.include?(expected)
-        when String then actual.include?(expected)
-        else false
+
+        if matching_hash_values?(actual, expected)
+          matching_hash_values(actual, expected)
+        elsif matching_mixed_array?(actual)
+          matching_mixed_array(actual, expected)
+        else
+          RSpec::Matchers::BuiltIn::Include.new(expected).matches?(actual)
         end
+      end
+
+      def matching_mixed_array?(actual)
+        actual.is_a?(Array) && actual.any?{|e| e.is_a?(Hash)}
+      end
+
+      def matching_mixed_array(actual, expected)
+        actual.any?{|e| matching_hash_values(e, expected)} ||
+        actual.map{|e| exclude_keys(e) }.include?(expected)
+      end
+
+      def matching_hash_values?(actual, expected)
+        (actual.is_a?(Hash) && !expected.is_a?(Hash)) ||
+        (actual.is_a?(Hash) && actual.values.any?{|v| v.is_a?(Hash)})
+      end
+
+      def matching_hash_values(actual, expected)
+        actual.values.map{|v| exclude_keys(v) }.include?(expected)
+      end
+
+      def matching_array?(actual)
+        actual.is_a?(Array)
       end
 
       def at_path(path)
