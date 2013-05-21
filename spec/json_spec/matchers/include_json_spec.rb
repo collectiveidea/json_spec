@@ -59,6 +59,18 @@ describe JsonSpec::Matchers::IncludeJson do
     %([{"id":1,"two":3}]).should include_json(%({"two":3}))
   end
 
+  it "provides a failure message for should" do
+    matcher = include_json(%({"json":"spec"}))
+    matcher.matches?(%({"foo":"bar"}))
+    matcher.failure_message_for_should.should == "Expected {\"foo\":\"bar\"} included {\"json\":\"spec\"}"
+  end
+
+  it "provides a failure message for should not" do
+    matcher = include_json(%("foo"))
+    matcher.matches?(%(["foo","bar", 1]))
+    matcher.failure_message_for_should_not.should == "Expected [\"foo\",\"bar\", 1] excluded \"foo\""
+  end
+
   it "provides a description message" do
     matcher = include_json(%({"json":"spec"}))
     matcher.matches?(%({"id":1,"json":"spec"}))

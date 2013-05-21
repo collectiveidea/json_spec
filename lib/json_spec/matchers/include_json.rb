@@ -12,6 +12,8 @@ module JsonSpec
       def matches?(actual_json)
         raise "Expected included JSON not provided" if @expected_json.nil?
 
+        @actual_json = actual_json
+
         actual = parse_json(actual_json, @path)
         expected = exclude_keys(parse_json(@expected_json))
         case actual
@@ -43,11 +45,11 @@ module JsonSpec
       end
 
       def failure_message_for_should
-        message_with_path("Expected included JSON")
+        message_with_path("Expected #{@actual_json} included #{@expected_json}")
       end
 
       def failure_message_for_should_not
-        message_with_path("Expected excluded JSON")
+        message_with_path("Expected #{@actual_json} excluded #{@expected_json}")
       end
 
       def description
