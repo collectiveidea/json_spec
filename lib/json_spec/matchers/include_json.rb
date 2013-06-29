@@ -5,12 +5,21 @@ module JsonSpec
       include JsonSpec::Exclusion
       include JsonSpec::Messages
 
+      attr_reader :expected, :actual
+
+      def diffable?
+        true
+      end
+
       def initialize(expected_json = nil)
         @expected_json = expected_json
       end
 
       def matches?(actual_json)
         raise "Expected included JSON not provided" if @expected_json.nil?
+
+        @actual = scrub(actual_json, @path)
+        @expected = scrub(@expected_json)
 
         actual = parse_json(actual_json, @path)
         expected = exclude_keys(parse_json(@expected_json))
@@ -53,6 +62,11 @@ module JsonSpec
       def description
         message_with_path("include JSON")
       end
+
+      private
+        def scrub(json, path = nil)
+          generate_normalized_json(exclude_keys(parse_json(json, path))).chomp + "\n"
+        end
     end
   end
 end
