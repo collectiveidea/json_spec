@@ -12,14 +12,10 @@ module JsonSpec
       def matches?(actual_json)
         raise "Expected included JSON not provided" if @expected_json.nil?
 
-        actual = parse_json(actual_json, @path)
+        actual = exclude_keys(values(parse_json(actual_json, @path)))
         expected = exclude_keys(parse_json(@expected_json))
-        case actual
-        when Hash then actual.values.map{|v| exclude_keys(v) }.include?(expected)
-        when Array then actual.map{|e| exclude_keys(e) }.include?(expected)
-        when String then actual.include?(expected)
-        else false
-        end
+
+        RSpec::Matchers::BuiltIn::Include.new(expected).matches?(actual)
       end
 
       def at_path(path)
@@ -30,6 +26,10 @@ module JsonSpec
       def from_file(path)
         @expected_json = load_json(path)
         self
+      end
+
+      def values(parsed_json)
+        parsed_json.is_a?(Hash) ? parsed_json.values : parsed_json
       end
 
       def excluding(*keys)
