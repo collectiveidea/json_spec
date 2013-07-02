@@ -14,7 +14,6 @@ module JsonSpec
 
         actual = exclude_keys(values(parse_json(actual_json, @path)))
         expected = exclude_keys(parse_json(@expected_json))
-
         RSpec::Matchers::BuiltIn::Include.new(expected).matches?(actual)
       end
 
