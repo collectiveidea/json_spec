@@ -21,6 +21,20 @@ describe JsonSpec::Matchers do
     end
   end
 
+  context "be_one_of" do
+    let(:expected_values){ ["1", "2", "3"] }
+
+    it "instantiates its matcher" do
+      JsonSpec::Matchers::BeOneOf.should_receive(:new).with(expected_values)
+      environment.be_one_of(expected_values)
+    end
+
+    it "returns its matcher" do
+      matcher = environment.be_one_of(expected_values)
+      matcher.should be_a(JsonSpec::Matchers::BeOneOf)
+    end
+  end
+
   context "include_json" do
     it "instantiates its matcher" do
       JsonSpec::Matchers::IncludeJson.should_receive(:new).with(json)
