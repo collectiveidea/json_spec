@@ -70,11 +70,32 @@ Then /^the (?:JSON|json)(?: response)?(?: at "(.*)")? should have the following:
   end
 end
 
+Then /^the (?:JSON|json)(?: response)?(?: at "(.*)")? should( not)? have the following keys:$/ do |base, negative, table|
+  match = have_json_keys(table.raw)
+  match = match.at_path(base) if base
+  if negative
+    last_json.should_not match
+  else
+    last_json.should match
+  end
+end
+
 Then /^the (?:JSON|json)(?: response)? should( not)? have "(.*)"$/ do |negative, path|
   if negative
     last_json.should_not have_json_path(path)
   else
     last_json.should have_json_path(path)
+  end
+end
+
+Then /^the (?:JSON|json)(?: response)?(?: at "(.*)")? should( not)? have keys (.*)$/ do |base, negative, keys|
+  keys = eval("[#{keys}]")
+  match = have_json_keys(keys)
+  match = match.at_path(base) if base
+  if negative
+    last_json.should_not match
+  else
+    last_json.should match
   end
 end
 
