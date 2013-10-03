@@ -26,4 +26,12 @@ describe JsonSpec::Matchers::HaveJsonPath do
     matcher.matches?(%({"id":1,"json":"spec"}))
     matcher.description.should == %(have JSON path "json")
   end
+
+  it "compares the content" do
+    %({"one":{"two":{"three":4}}}).should have_json_path("one/two/three").with_content(4)
+  end
+
+  it "doesn't match incorrect content" do
+    %({"one":{"two":{"three":4}}}).should_not have_json_path("one/two/three").with_content(3)
+  end
 end
