@@ -104,6 +104,6 @@ describe JsonSpec::Matchers::BeJsonEql do
 
   it "matches file contents" do
     JsonSpec.directory = files_path
-    %({ "value" : "from_file" }).should be_json_eql.to_file("one.json")
+    %({"one":{"value":"from_file"}}).should be_json_eql.to_file("one.json")
   end
 end

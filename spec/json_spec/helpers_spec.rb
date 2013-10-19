@@ -84,12 +84,12 @@ describe JsonSpec::Helpers do
 
     it "returns JSON when the file exists" do
       JsonSpec.directory = files_path
-      load_json("one.json").should == %({"value":"from_file"})
+      load_json("one.json").should == %({"one":{"value":"from_file"}})
     end
 
     it "ignores extra slashes" do
       JsonSpec.directory = "/#{files_path}/"
-      load_json("one.json").should == %({"value":"from_file"})
+      load_json("one.json").should == %({"one":{"value":"from_file"}})
     end
 
     it "raises an error when the file doesn't exist" do
