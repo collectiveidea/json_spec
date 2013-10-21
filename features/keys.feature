@@ -17,10 +17,10 @@ Feature: Paths
   Scenario: Base paths
     When I get the JSON
     Then the JSON should have keys "a", "b", "c"
-    Then the JSON should not have keys "d", "e"
-    Then the JSON at "z" should have keys "d", "e"
-    Then the JSON at "z" should not have keys "m", "z"
-    Then the JSON should have keys "strange keys: '\_(\")_/', FTW!", "a", "b"
+    And the JSON should not have keys "d", "e"
+    And the JSON at "z" should have keys "d", "e"
+    And the JSON at "z" should not have keys "m", "z"
+    And the JSON should have keys "strange keys: '\_(\")_/', FTW!", "a", "b"
 
   Scenario: Table format
     When I get the JSON
@@ -28,12 +28,12 @@ Feature: Paths
       | a |
       | b |
       | c |
-    Then the JSON should not have the following keys:
+    And the JSON should not have the following keys:
       | d |
       | e |
-    Then the JSON at "z" should have the following keys:
+    And the JSON at "z" should have the following keys:
       | d |
       | e |
-    Then the JSON at "z" should not have the following keys:
+    And the JSON at "z" should not have the following keys:
       | m |
       | z |
