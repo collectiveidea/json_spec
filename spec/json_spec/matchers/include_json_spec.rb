@@ -59,6 +59,10 @@ describe JsonSpec::Matchers::IncludeJson do
     %([{"id":1,"two":3}]).should include_json(%({"two":3}))
   end
 
+  it 'matching only the specified keys' do
+    %([{"id":1,"json":"spec"}]).should include_json(%({"id":1})).only(:id)
+  end
+
   it "provides a description message" do
     matcher = include_json(%({"json":"spec"}))
     matcher.matches?(%({"id":1,"json":"spec"}))

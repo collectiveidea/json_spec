@@ -86,6 +86,11 @@ describe JsonSpec::Matchers::BeJsonEql do
     %({"id":1,"json":"spec"}).should_not be_json_eql(%({"id":2,"json":"different"})).including(:id, :json)
   end
 
+  it 'matching only the specified keys' do
+    JsonSpec.excluded_keys = []
+    %({"id":1,"json":"spec"}).should be_json_eql(%({"id":1})).only(:id)
+  end
+
   it "provides a description message" do
     matcher = be_json_eql(%({"id":2,"json":"spec"}))
     matcher.matches?(%({"id":1,"json":"spec"}))
