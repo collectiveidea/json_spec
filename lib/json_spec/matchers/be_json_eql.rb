@@ -42,6 +42,11 @@ module JsonSpec
         self
       end
 
+      def only(*keys)
+        only_keys.merge(keys.map(&:to_s))
+        self
+      end
+
       def failure_message_for_should
         message_with_path("Expected equivalent JSON")
       end

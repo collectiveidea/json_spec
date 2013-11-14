@@ -16,11 +16,19 @@ module JsonSpec
     end
 
     def exclude_key?(key)
-      excluded_keys.include?(key)
+      if only_keys.empty?
+        excluded_keys.include?(key)
+      else
+        !only_keys.include?(key)
+      end
     end
 
     def excluded_keys
       @excluded_keys ||= Set.new(JsonSpec.excluded_keys)
+    end
+
+    def only_keys
+      @only_keys ||= Set.new
     end
   end
 end
