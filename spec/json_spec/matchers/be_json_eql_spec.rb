@@ -33,14 +33,9 @@ describe JsonSpec::Matchers::BeJsonEql do
     actual.to_json.should be_json_eql(expected.to_json)
   end
 
-  it "ignores custom excluded hash keys" do
-    JsonSpec.exclude_keys("ignore")
-    %({"json":"spec","ignore":"please"}).should be_json_eql(%({"json":"spec"}))
-  end
-
   it "ignores nested, excluded hash keys" do
     JsonSpec.exclude_keys("ignore")
-    %({"json":"spec","please":{"ignore":"this"}}).should be_json_eql(%({"json":"spec","please":{}}))
+    %({"json":"spec","please":{"ignore":"this"}}).should be_json_eql(%({"json":"spec","please":{"ignore":"that"}}))
   end
 
   it "ignores hash keys when included in the expected value" do

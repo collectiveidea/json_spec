@@ -6,7 +6,7 @@ module JsonSpec
       case ruby
       when Hash
         ruby.sort.inject({}) do |hash, (key, value)|
-          hash[key] = exclude_keys(value) unless exclude_key?(key)
+          hash[key] = exclude_key?(key) ? 1 : exclude_keys(value)
           hash
         end
       when Array
