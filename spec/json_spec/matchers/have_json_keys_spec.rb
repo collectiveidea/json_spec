@@ -7,7 +7,7 @@ describe JsonSpec::Matchers::HaveJsonKeys do
     %("test").should_not have_json_keys
   end
 
-  it "fails for bigger set of keys" do
+  it "fails when one key is missing" do
     %({"a": "1", "b": "2"}).should_not have_json_keys(:a, :b, :c)
   end
 
