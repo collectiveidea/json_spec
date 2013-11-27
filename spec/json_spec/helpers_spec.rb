@@ -5,11 +5,11 @@ describe JsonSpec::Helpers do
 
   context "parse_json" do
     it "parses JSON documents" do
-      parse_json(%({"json":["spec"]})).should == {"json" => ["spec"]}
+      expect(parse_json(%({"json":["spec"]}))).to eq({"json" => ["spec"]})
     end
 
     it "parses JSON values" do
-      parse_json(%("json_spec")).should == "json_spec"
+      expect(parse_json(%("json_spec"))).to eq("json_spec")
     end
 
     it "raises a parser error for invalid JSON" do
@@ -18,8 +18,8 @@ describe JsonSpec::Helpers do
 
     it "parses at a path if given" do
       json = %({"json":["spec"]})
-      parse_json(json, "json").should == ["spec"]
-      parse_json(json, "json/0").should == "spec"
+      expect(parse_json(json, "json")).to eq(["spec"])
+      expect(parse_json(json, "json/0")).to eq("spec")
     end
 
     it "raises an error for a missing path" do
@@ -31,7 +31,7 @@ describe JsonSpec::Helpers do
 
     it "parses at a numeric string path" do
       json = %({"1":"two"})
-      parse_json(%({"1":"two"}), "1").should == "two"
+      expect(parse_json(%({"1":"two"}), "1")).to eq("two")
     end
   end
 
@@ -44,19 +44,19 @@ describe JsonSpec::Helpers do
   ]
 }
       JSON
-      normalize_json(%({"json":["spec"]})).should == normalized.chomp
+      expect(normalize_json(%({"json":["spec"]}))).to eq(normalized.chomp)
     end
 
     it "normalizes at a path" do
-      normalize_json(%({"json":["spec"]}), "json/0").should == %("spec")
+      expect(normalize_json(%({"json":["spec"]}), "json/0")).to eq(%("spec"))
     end
 
     it "accepts a JSON value" do
-      normalize_json(%("json_spec")).should == %("json_spec")
+      expect(normalize_json(%("json_spec"))).to eq(%("json_spec"))
     end
 
     it "normalizes JSON values" do
-      normalize_json(%(1e+1)).should == %(10.0)
+      expect(normalize_json(%(1e+1))).to eq(%(10.0))
     end
   end
 
@@ -69,11 +69,11 @@ describe JsonSpec::Helpers do
   ]
 }
       JSON
-      generate_normalized_json({"json" => ["spec"]}).should == normalized.chomp
+      expect(generate_normalized_json({"json" => ["spec"]})).to eq(normalized.chomp)
     end
 
     it "generates a normalized JSON value" do
-      generate_normalized_json(nil).should == %(null)
+      expect(generate_normalized_json(nil)).to eq(%(null))
     end
   end
 
@@ -84,12 +84,12 @@ describe JsonSpec::Helpers do
 
     it "returns JSON when the file exists" do
       JsonSpec.directory = files_path
-      load_json("one.json").should == %({"value":"from_file"})
+      expect(load_json("one.json")).to eq(%({"value":"from_file"}))
     end
 
     it "ignores extra slashes" do
       JsonSpec.directory = "/#{files_path}/"
-      load_json("one.json").should == %({"value":"from_file"})
+      expect(load_json("one.json")).to eq(%({"value":"from_file"}))
     end
 
     it "raises an error when the file doesn't exist" do
@@ -104,8 +104,8 @@ describe JsonSpec::Helpers do
 
     it "finds nested files" do
       JsonSpec.directory = files_path
-      load_json("project/one.json").should == %({"nested":"inside_folder"})
-      load_json("project/version/one.json").should == %({"nested":"deeply"})
+      expect(load_json("project/one.json")).to eq(%({"nested":"inside_folder"}))
+      expect(load_json("project/version/one.json")).to eq(%({"nested":"deeply"}))
     end
   end
 end

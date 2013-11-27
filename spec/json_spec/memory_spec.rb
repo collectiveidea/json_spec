@@ -2,31 +2,31 @@ require "spec_helper"
 
 describe JsonSpec::Memory do
   it "has a memory" do
-    JsonSpec.memory.should == {}
+    expect(JsonSpec.memory).to eq({})
   end
 
   it "memorizes strings" do
     JsonSpec.memorize(:key, "value")
-    JsonSpec.memory.should == {:key => "value"}
+    expect(JsonSpec.memory).to eq({:key => "value"})
   end
 
   it "symbolizes keys" do
     JsonSpec.memorize("key", "value")
-    JsonSpec.memory.should == {:key => "value"}
+    expect(JsonSpec.memory).to eq({:key => "value"})
   end
 
   it "regurgitates unremembered strings" do
-    JsonSpec.remember("foo%{bar}").should == "foo%{bar}"
+    expect(JsonSpec.remember("foo%{bar}")).to eq("foo%{bar}")
   end
 
   it "remembers strings" do
     JsonSpec.memorize(:bar, "baz")
-    JsonSpec.remember("foo%{bar}").should == "foobaz"
+    expect(JsonSpec.remember("foo%{bar}")).to eq("foobaz")
   end
 
   it "forgets" do
     JsonSpec.memorize(:key, "value")
     JsonSpec.forget
-    JsonSpec.memory.should == {}
+    expect(JsonSpec.memory).to eq({})
   end
 end

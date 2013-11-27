@@ -11,25 +11,25 @@ describe JsonSpec::Matchers do
 
   context "be_json_eql" do
     it "instantiates its matcher" do
-      JsonSpec::Matchers::BeJsonEql.should_receive(:new).with(json)
+      expect(JsonSpec::Matchers::BeJsonEql).to receive(:new).with(json)
       environment.be_json_eql(json)
     end
 
     it "returns its matcher" do
       matcher = environment.be_json_eql(json)
-      matcher.should be_a(JsonSpec::Matchers::BeJsonEql)
+      expect(matcher).to be_a(JsonSpec::Matchers::BeJsonEql)
     end
   end
 
   context "include_json" do
     it "instantiates its matcher" do
-      JsonSpec::Matchers::IncludeJson.should_receive(:new).with(json)
+      expect(JsonSpec::Matchers::IncludeJson).to receive(:new).with(json)
       environment.include_json(json)
     end
 
     it "returns its matcher" do
       matcher = environment.include_json(json)
-      matcher.should be_a(JsonSpec::Matchers::IncludeJson)
+      expect(matcher).to be_a(JsonSpec::Matchers::IncludeJson)
     end
   end
 
@@ -37,13 +37,13 @@ describe JsonSpec::Matchers do
     let(:path){ "json" }
 
     it "instantiates its matcher" do
-      JsonSpec::Matchers::HaveJsonPath.should_receive(:new).with(path)
+      expect(JsonSpec::Matchers::HaveJsonPath).to receive(:new).with(path)
       environment.have_json_path(path)
     end
 
     it "returns its matcher" do
       matcher = environment.have_json_path(path)
-      matcher.should be_a(JsonSpec::Matchers::HaveJsonPath)
+      expect(matcher).to be_a(JsonSpec::Matchers::HaveJsonPath)
     end
   end
 
@@ -51,13 +51,13 @@ describe JsonSpec::Matchers do
     let(:type){ Hash }
 
     it "instantiates its matcher" do
-      JsonSpec::Matchers::HaveJsonType.should_receive(:new).with(type)
+      expect(JsonSpec::Matchers::HaveJsonType).to receive(:new).with(type)
       environment.have_json_type(type)
     end
 
     it "returns its matcher" do
       matcher = environment.have_json_type(type)
-      matcher.should be_a(JsonSpec::Matchers::HaveJsonType)
+      expect(matcher).to be_a(JsonSpec::Matchers::HaveJsonType)
     end
   end
 
@@ -65,13 +65,13 @@ describe JsonSpec::Matchers do
     let(:size){ 1 }
 
     it "instantiates its matcher" do
-      JsonSpec::Matchers::HaveJsonSize.should_receive(:new).with(size)
+      expect(JsonSpec::Matchers::HaveJsonSize).to receive(:new).with(size)
       environment.have_json_size(size)
     end
 
     it "returns its matcher" do
       matcher = environment.have_json_size(size)
-      matcher.should be_a(JsonSpec::Matchers::HaveJsonSize)
+      expect(matcher).to be_a(JsonSpec::Matchers::HaveJsonSize)
     end
   end
 end
