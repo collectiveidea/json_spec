@@ -72,19 +72,15 @@ describe JsonSpec::Matchers::IncludeJson do
   end
 
   it "provides a useful failure message for should" do
-    actual   = %({"ids": [1,2,3]})
-    expected = %({"ids": [4,5,6]})
-    matcher  = include_json(expected)
-    matcher.matches?(actual)
-    matcher.failure_message_for_should.should == "Expected #{actual} to include #{expected}"
+    matcher = include_json(%([4,5,6]))
+    matcher.matches?(%([1,2,3]))
+    matcher.failure_message_for_should.should == "Expected [1,2,3] to include [4,5,6]"
   end
 
   it "provides a useful failure message for should not" do
-    actual   = %({"ids": [1,2,3]})
-    expected = actual
-    matcher  = include_json(expected)
-    matcher.matches?(actual)
-    matcher.failure_message_for_should_not.should == "Expected #{actual} to exclude #{expected}"
+    matcher = include_json(%(3))
+    matcher.matches?(%([1,2,3]))
+    matcher.failure_message_for_should_not.should == "Expected [1,2,3] to not include 3"
   end
 
   it "raises an error when not given expected JSON" do

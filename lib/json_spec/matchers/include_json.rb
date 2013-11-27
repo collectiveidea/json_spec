@@ -5,8 +5,6 @@ module JsonSpec
       include JsonSpec::Exclusion
       include JsonSpec::Messages
 
-      attr_reader :actual_json
-
       def initialize(expected_json = nil)
         @expected_json = expected_json
       end
@@ -14,7 +12,7 @@ module JsonSpec
       def matches?(actual_json)
         raise "Expected included JSON not provided" if @expected_json.nil?
 
-        self.actual_json = actual_json
+        @actual_json = actual_json
 
         actual = parse_json(actual_json, @path)
         expected = exclude_keys(parse_json(@expected_json))
@@ -47,23 +45,17 @@ module JsonSpec
       end
 
       def failure_message
-        message_with_path("Expected #{actual_json} to include #{@expected_json}")
+        message_with_path("Expected #{@actual_json} to include #{@expected_json}")
       end
       alias :failure_message_for_should :failure_message
 
       def failure_message_when_negated
-        message_with_path("Expected #{actual_json} to exclude #{@expected_json}")
+        message_with_path("Expected #{@actual_json} to not include #{@expected_json}")
       end
       alias :failure_message_for_should_not :failure_message_when_negated
 
       def description
         message_with_path("include JSON")
-      end
-
-      private
-
-      def actual_json=(json)
-        @actual_json = json
       end
     end
   end
