@@ -34,9 +34,9 @@ describe JsonSpec::Matchers::IncludeJson do
   end
 
   it "matches a hash included in a hash" do
-    json = %({"one":{"two":3},"four":{"five":6}})
-    json.should include_json(%({"two":3}))
-    json.should include_json(%({"five":6}))
+    json = %({"one":{"two":3, "three":4},"four":{"five":6}})
+    json.should include_json(%({"one":{"two":3}}))
+    json.should_not include_json(%({"five":6}))
   end
 
   it "matches an array included in a hash" do

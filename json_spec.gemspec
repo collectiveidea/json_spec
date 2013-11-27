@@ -13,6 +13,7 @@ Gem::Specification.new do |gem|
 
   gem.add_dependency "multi_json", "~> 1.0"
   gem.add_dependency "rspec", "~> 2.0"
+  gem.add_dependency "hashdiff", "~> 0.1.1"
 
   gem.add_development_dependency "bundler", "~> 1.0"
 
