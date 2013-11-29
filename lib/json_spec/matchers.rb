@@ -3,6 +3,8 @@ require "json_spec/matchers/include_json"
 require "json_spec/matchers/have_json_path"
 require "json_spec/matchers/have_json_type"
 require "json_spec/matchers/have_json_size"
+require "json_spec/matchers/be_json_subset_of"
+require "json_spec/matchers/be_json_superset_of"
 
 module JsonSpec
   module Matchers
@@ -24,6 +26,14 @@ module JsonSpec
 
     def have_json_size(size)
       JsonSpec::Matchers::HaveJsonSize.new(size)
+    end
+
+    def be_json_subset_of(json = nil)
+      JsonSpec::Matchers::BeJsonSubsetOf.new(json)
+    end
+
+    def be_json_superset_of(json = nil)
+      JsonSpec::Matchers::BeJsonSupersetOf.new(json)
     end
   end
 end

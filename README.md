@@ -40,6 +40,16 @@ describe User do
       user.to_json.should have_json_size(1).at_path("friends")
       user.to_json.should include_json(friend.to_json)
     end
+
+    it "has certain attributes" do
+      first_name = { first_name: "Steve" }
+      last_name = { last_name: "Richert" }
+      names = first_name.merge last_name
+
+      expect(user.to_json).to be_json_superset_of first_name.to_json
+      expect(last_name.to_json).to be_json_subset_of user.to_json
+      expect(names.to_json).to be_json_subset_of user.to_json
+    end
   end
 end
 ```
