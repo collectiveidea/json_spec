@@ -45,6 +45,11 @@ describe JsonSpec::Matchers::IncludeJson do
     json.should include_json(%([5,6]))
   end
 
+  it "is an identity function" do
+    json = %({"one":1})
+    json.should include_json(%({"one":1}))
+  end
+
   it "matches a substring" do
     json = %("json")
     json.should include_json(%("js"))
