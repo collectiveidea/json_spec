@@ -45,6 +45,16 @@ describe JsonSpec::Matchers::IncludeJson do
     json.should include_json(%([5,6]))
   end
 
+  it "is a subset relation" do
+    json = %({"one":1})
+    json.should include_json(%({"one":1}))
+  end
+
+  it "matches where expected is a proper subset of actual" do
+    json = %({"one":1, "two": 2})
+    json.should include_json(%({"one":1}))
+  end
+
   it "matches a substring" do
     json = %("json")
     json.should include_json(%("js"))

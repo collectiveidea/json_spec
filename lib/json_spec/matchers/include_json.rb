@@ -15,7 +15,9 @@ module JsonSpec
         actual = parse_json(actual_json, @path)
         expected = exclude_keys(parse_json(@expected_json))
         case actual
-        when Hash then actual.values.map{|v| exclude_keys(v) }.include?(expected)
+        when Hash then 
+          expected.is_a?(Hash) && actual.select { |k,v| expected.include? k } == expected || 
+            actual.values.map{|v| exclude_keys(v) }.include?(expected)
         when Array then actual.map{|e| exclude_keys(e) }.include?(expected)
         when String then actual.include?(expected)
         else false
