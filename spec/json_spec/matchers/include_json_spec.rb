@@ -50,7 +50,7 @@ describe JsonSpec::Matchers::IncludeJson do
     json.should include_json(%({"one":1}))
   end
 
-  it "is an identity function more" do
+  it "matches where expected is a subset of actual" do
     json = %({"one":1, "two": 2})
     json.should include_json(%({"one":1}))
   end
