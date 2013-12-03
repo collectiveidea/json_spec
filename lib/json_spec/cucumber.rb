@@ -2,6 +2,14 @@ require File.expand_path("../../json_spec", __FILE__)
 
 World(JsonSpec::Helpers, JsonSpec::Matchers)
 
+def _match(negative, matcher)
+  if negative
+    last_json.should_not matcher
+  else
+    last_json.should matcher
+  end
+end
+
 After do
   JsonSpec.forget
 end
@@ -11,51 +19,27 @@ When /^(?:I )?keep the (?:JSON|json)(?: response)?(?: at "(.*)")? as "(.*)"$/ do
 end
 
 Then /^the (?:JSON|json)(?: response)?(?: at "(.*)")? should( not)? be:$/ do |path, negative, json|
-  if negative
-    last_json.should_not be_json_eql(JsonSpec.remember(json)).at_path(path)
-  else
-    last_json.should be_json_eql(JsonSpec.remember(json)).at_path(path)
-  end
+  _match negative, be_json_eql(JsonSpec.remember(json)).at_path(path)
 end
 
 Then /^the (?:JSON|json)(?: response)?(?: at "(.*)")? should( not)? be file "(.+)"$/ do |path, negative, file_path|
-  if negative
-    last_json.should_not be_json_eql.to_file(file_path).at_path(path)
-  else
-    last_json.should be_json_eql.to_file(file_path).at_path(path)
-  end
+  _match negative, be_json_eql.to_file(file_path).at_path(path)
 end
 
 Then /^the (?:JSON|json)(?: response)?(?: at "(.*)")? should( not)? be (".*"|\-?\d+(?:\.\d+)?(?:[eE][\+\-]?\d+)?|\[.*\]|%?\{.*\}|true|false|null)$/ do |path, negative, value|
-  if negative
-    last_json.should_not be_json_eql(JsonSpec.remember(value)).at_path(path)
-  else
-    last_json.should be_json_eql(JsonSpec.remember(value)).at_path(path)
-  end
+  _match negative, be_json_eql(JsonSpec.remember(value)).at_path(path)
 end
 
 Then /^the (?:JSON|json)(?: response)?(?: at "(.*)")? should( not)? include:$/ do |path, negative, json|
-  if negative
-    last_json.should_not include_json(JsonSpec.remember(json)).at_path(path)
-  else
-    last_json.should include_json(JsonSpec.remember(json)).at_path(path)
-  end
+  _match negative, include_json(JsonSpec.remember(json)).at_path(path)
 end
 
 Then /^the (?:JSON|json)(?: response)?(?: at "(.*)")? should( not)? include file "(.+)"$/ do |path, negative, file_path|
-  if negative
-    last_json.should_not include_json.from_file(file_path).at_path(path)
-  else
-    last_json.should include_json.from_file(file_path).at_path(path)
-  end
+  _match negative, include_json.from_file(file_path).at_path(path)
 end
 
 Then /^the (?:JSON|json)(?: response)?(?: at "(.*)")? should( not)? include (".*"|\-?\d+(?:\.\d+)?(?:[eE][\+\-]?\d+)?|\[.*\]|%?\{.*\}|true|false|null)$/ do |path, negative, value|
-  if negative
-    last_json.should_not include_json(JsonSpec.remember(value)).at_path(path)
-  else
-    last_json.should include_json(JsonSpec.remember(value)).at_path(path)
-  end
+  _match negative, include_json(JsonSpec.remember(value)).at_path(path)
 end
 
 Then /^the (?:JSON|json)(?: response)?(?: at "(.*)")? should have the following:$/ do |base, table|
@@ -71,25 +55,13 @@ Then /^the (?:JSON|json)(?: response)?(?: at "(.*)")? should have the following:
 end
 
 Then /^the (?:JSON|json)(?: response)? should( not)? have "(.*)"$/ do |negative, path|
-  if negative
-    last_json.should_not have_json_path(path)
-  else
-    last_json.should have_json_path(path)
-  end
+  _match negative, have_json_path(path)
 end
 
 Then /^the (?:JSON|json)(?: response)?(?: at "(.*)")? should( not)? be an? (.*)$/ do |path, negative, type|
-  if negative
-    last_json.should_not have_json_type(type).at_path(path)
-  else
-    last_json.should have_json_type(type).at_path(path)
-  end
+  _match negative, have_json_type(type).at_path(path)
 end
 
 Then /^the (?:JSON|json)(?: response)?(?: at "(.*)")? should( not)? have (\d+)/ do |path, negative, size|
-  if negative
-    last_json.should_not have_json_size(size.to_i).at_path(path)
-  else
-    last_json.should have_json_size(size.to_i).at_path(path)
-  end
+  _match negative, have_json_size(size.to_i).at_path(path)
 end
