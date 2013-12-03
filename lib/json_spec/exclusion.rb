@@ -2,6 +2,16 @@ module JsonSpec
   module Exclusion
     extend self
 
+    def excluding(*keys)
+      excluded_keys.merge(keys.map(&:to_s))
+      self
+    end
+
+    def including(*keys)
+      excluded_keys.subtract(keys.map(&:to_s))
+      self
+    end
+
     def exclude_keys(ruby)
       case ruby
       when Hash

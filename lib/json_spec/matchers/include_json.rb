@@ -32,16 +32,6 @@ module JsonSpec
         self
       end
 
-      def excluding(*keys)
-        excluded_keys.merge(keys.map(&:to_s))
-        self
-      end
-
-      def including(*keys)
-        excluded_keys.subtract(keys.map(&:to_s))
-        self
-      end
-
       def failure_message_for_should
         message_with_path("Expected included JSON")
       end
