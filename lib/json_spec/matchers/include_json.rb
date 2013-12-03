@@ -1,6 +1,7 @@
 module JsonSpec
   module Matchers
     class IncludeJson
+      include JsonSpec::AtPath
       include JsonSpec::Helpers
       include JsonSpec::Exclusion
       include JsonSpec::Messages
@@ -20,11 +21,6 @@ module JsonSpec
         when String then actual.include?(expected)
         else false
         end
-      end
-
-      def at_path(path)
-        @path = path
-        self
       end
 
       def from_file(path)

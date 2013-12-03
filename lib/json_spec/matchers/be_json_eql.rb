@@ -1,6 +1,7 @@
 module JsonSpec
   module Matchers
     class BeJsonEql
+      include JsonSpec::AtPath
       include JsonSpec::Helpers
       include JsonSpec::Exclusion
       include JsonSpec::Messages
@@ -20,11 +21,6 @@ module JsonSpec
 
         @actual, @expected = scrub(actual_json, @path), scrub(@expected_json)
         @actual == @expected
-      end
-
-      def at_path(path)
-        @path = path
-        self
       end
 
       def to_file(path)
