@@ -1,5 +1,8 @@
 language: ruby
 branches: master
+gemfile:
+  - gemfiles/rspec2.gemfile
+  - gemfiles/rspec3.gemfile
 rvm:
   - 1.9.2
   - 1.9.3
