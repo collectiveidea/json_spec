@@ -12,15 +12,11 @@ module JsonSpec
       def matches?(actual_json)
         raise "Expected included JSON not provided" if @expected_json.nil?
 
-        actual = parse_json(actual_json, @path)
+        actual = exclude_keys(parse_json(actual_json, @path))
         expected = exclude_keys(parse_json(@expected_json))
-        case actual
-        when Hash then actual.values.map{|v| exclude_keys(v) }.include?(expected)
-        when Array then actual.map{|e| exclude_keys(e) }.include?(expected)
-        when String then actual.include?(expected)
-        else false
-        end
+        included_in_json?( actual, expected )
       end
+
 
       def at_path(path)
         @path = path
@@ -53,6 +49,29 @@ module JsonSpec
       def description
         message_with_path("include JSON")
       end
+
+      private
+      def included_in_json?( actual, expected )
+        case actual
+          when Hash then included_in_hash?(actual, expected) or actual.values.any?{ |v| included_in_json?(v, expected) }
+          when Array then included_in_array?(actual, expected)
+          else actual == expected
+        end
+      end
+
+      def included_in_array?( actual_array, expected)
+        if expected.is_a? Array
+          (expected - actual_array).empty?
+        else
+          actual_array.include? expected
+        end
+      end
+
+      def included_in_hash?( actual_hash, expected )
+        return false unless expected.is_a? Hash
+        expected == actual_hash.select{|k,_| expected.has_key? k}
+      end
+
     end
   end
 end
