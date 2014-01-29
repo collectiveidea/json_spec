@@ -12,7 +12,7 @@ module JsonSpec
       def matches?(actual_json)
         raise "Expected included JSON not provided" if @expected_json.nil?
 
-        actual = exclude_keys(parse_json(actual_json, @path))
+        actual = parse_json(actual_json, @path)
         expected = exclude_keys(parse_json(@expected_json))
         included_in_json?( actual, expected )
       end
