@@ -1,6 +1,6 @@
 module JsonSpec
   module Matchers
-    class BeJsonSupersetOf
+    class HaveJsonSuperset
       include JsonSpec::Helpers
       include JsonSpec::Exclusion
       include JsonSpec::Messages
@@ -17,11 +17,11 @@ module JsonSpec
 
         raise "Expected JSON objects" unless actual.is_a?(Hash) && expected.is_a?(Hash)
 
-        actual_slice = expected.keys.each_with_object(Hash.new) { |k, hash|
-          hash[k] = actual[k] if actual.include? k
+        expected_slice = actual.keys.each_with_object(Hash.new) { |k, hash|
+          hash[k] = expected[k] if expected.include? k
         }
 
-        scrub(actual_slice) == scrub(expected)
+        scrub(actual) == scrub(expected_slice)
       end
 
       def at_path(path)
@@ -40,15 +40,15 @@ module JsonSpec
       end
 
       def failure_message_for_should
-        message_with_path("Expected 'actual' to be a superset of 'expected' JSON")
+        message_with_path("Expected 'actual' to have a superset 'expected' JSON")
       end
 
       def failure_message_for_should_not
-        message_with_path("Expected 'actual' to not be a superset of 'expected' JSON")
+        message_with_path("Expected 'actual' to not have a superset 'expected' JSON")
       end
 
       def description
-        message_with_path("be superset of JSON")
+        message_with_path("have superset JSON")
       end
 
       def to_file(path)

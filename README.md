@@ -13,6 +13,8 @@ json_spec defines five new RSpec matchers:
 * `have_json_path`
 * `have_json_type`
 * `have_json_size`
+* `have_json_subset`
+* `have_json_superset`
 
 The new matchers could be used in RSpec as follows:
 
@@ -46,9 +48,9 @@ describe User do
       last_name = { last_name: "Richert" }
       names = first_name.merge last_name
 
-      expect(user.to_json).to be_json_superset_of first_name.to_json
-      expect(last_name.to_json).to be_json_subset_of user.to_json
-      expect(names.to_json).to be_json_subset_of user.to_json
+      expect(user.to_json).to have_json_subset first_name.to_json
+      expect(last_name.to_json).to have_json_superset user.to_json
+      expect(names.to_json).to have_json_superset user.to_json
     end
   end
 end
