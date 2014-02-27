@@ -4,7 +4,6 @@ require "json_spec/matchers/have_json_path"
 require "json_spec/matchers/have_json_type"
 require "json_spec/matchers/have_json_size"
 require "json_spec/matchers/have_json_subset"
-require "json_spec/matchers/have_json_superset"
 
 module JsonSpec
   module Matchers
@@ -30,10 +29,6 @@ module JsonSpec
 
     def have_json_subset(json = nil)
       JsonSpec::Matchers::HaveJsonSubset.new(json)
-    end
-
-    def have_json_superset(json = nil)
-      JsonSpec::Matchers::HaveJsonSuperset.new(json)
     end
   end
 end
