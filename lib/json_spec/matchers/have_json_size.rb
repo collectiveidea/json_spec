@@ -1,6 +1,7 @@
 module JsonSpec
   module Matchers
     class HaveJsonSize
+      include JsonSpec::AtPath
       include JsonSpec::Helpers
       include JsonSpec::Messages
 
@@ -12,11 +13,6 @@ module JsonSpec
         ruby = parse_json(json, @path)
         @actual = Enumerable === ruby ? ruby.size : 1
         @actual == @expected
-      end
-
-      def at_path(path)
-        @path = path
-        self
       end
 
       def failure_message_for_should

@@ -1,6 +1,8 @@
 require "spec_helper"
 
 describe JsonSpec::Configuration do
+  before { JsonSpec.reset }
+
   it "excludes id and timestamps by default" do
     JsonSpec.excluded_keys.should == ["id", "created_at", "updated_at"]
   end

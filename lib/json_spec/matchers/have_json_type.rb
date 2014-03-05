@@ -1,6 +1,7 @@
 module JsonSpec
   module Matchers
     class HaveJsonType
+      include JsonSpec::AtPath
       include JsonSpec::Helpers
       include JsonSpec::Messages
 
@@ -11,11 +12,6 @@ module JsonSpec
       def matches?(json)
         @ruby = parse_json(json, @path)
         @classes.any?{|c| c === @ruby }
-      end
-
-      def at_path(path)
-        @path = path
-        self
       end
 
       def failure_message_for_should

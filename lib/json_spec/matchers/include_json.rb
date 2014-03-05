@@ -1,6 +1,7 @@
 module JsonSpec
   module Matchers
     class IncludeJson
+      include JsonSpec::AtPath
       include JsonSpec::Helpers
       include JsonSpec::Exclusion
       include JsonSpec::Messages
@@ -22,23 +23,8 @@ module JsonSpec
         end
       end
 
-      def at_path(path)
-        @path = path
-        self
-      end
-
       def from_file(path)
         @expected_json = load_json(path)
-        self
-      end
-
-      def excluding(*keys)
-        excluded_keys.merge(keys.map(&:to_s))
-        self
-      end
-
-      def including(*keys)
-        excluded_keys.subtract(keys.map(&:to_s))
         self
       end
 

@@ -1,6 +1,8 @@
 require "spec_helper"
 
 describe JsonSpec::Memory do
+  before { JsonSpec.reset }
+
   it "has a memory" do
     JsonSpec.memory.should == {}
   end
