@@ -24,13 +24,13 @@ describe JsonSpec::Matchers::HaveJsonSize do
   it "provides a failure message for should" do
     matcher = have_json_size(3)
     matcher.matches?(%([1,2]))
-    matcher.failure_message_for_should.should == "Expected JSON value size to be 3, got 2"
+    matcher.failure_message.should == "Expected JSON value size to be 3, got 2"
   end
 
   it "provides a failure message for should not" do
     matcher = have_json_size(3)
     matcher.matches?(%([1,2,3]))
-    matcher.failure_message_for_should_not.should == "Expected JSON value size to not be 3, got 3"
+    matcher.failure_message_when_negated.should == "Expected JSON value size to not be 3, got 3"
   end
 
   it "provides a description message" do

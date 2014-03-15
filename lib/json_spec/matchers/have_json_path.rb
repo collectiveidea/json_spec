@@ -14,11 +14,11 @@ module JsonSpec
         false
       end
 
-      def failure_message_for_should
+      def failure_message
         %(Expected JSON path "#{@path}")
       end
 
-      def failure_message_for_should_not
+      def failure_message_when_negated
         %(Expected no JSON path "#{@path}")
       end
 

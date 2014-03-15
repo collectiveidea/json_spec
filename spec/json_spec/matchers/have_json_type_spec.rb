@@ -49,13 +49,13 @@ describe JsonSpec::Matchers::HaveJsonType do
   it "provides a failure message for should" do
     matcher = have_json_type(Numeric)
     matcher.matches?(%("foo"))
-    matcher.failure_message_for_should.should == "Expected JSON value type to be Numeric, got String"
+    matcher.failure_message.should == "Expected JSON value type to be Numeric, got String"
   end
 
   it "provides a failure message for should not" do
     matcher = have_json_type(Numeric)
     matcher.matches?(%(10))
-    matcher.failure_message_for_should_not.should == "Expected JSON value type to not be Numeric, got Fixnum"
+    matcher.failure_message_when_negated.should == "Expected JSON value type to not be Numeric, got Fixnum"
   end
 
   it "provides a description message" do
