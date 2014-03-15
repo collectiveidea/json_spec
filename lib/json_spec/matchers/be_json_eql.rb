@@ -42,11 +42,11 @@ module JsonSpec
         self
       end
 
-      def failure_message_for_should
+      def failure_message
         message_with_path("Expected equivalent JSON")
       end
 
-      def failure_message_for_should_not
+      def failure_message_when_negated
         message_with_path("Expected inequivalent JSON")
       end
 
