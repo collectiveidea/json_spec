@@ -8,22 +8,36 @@ module JsonSpec
       end
 
       def matches?(json)
-        parse_json(json, @path)
+        obj = parse_json(json, @path)
+        if @content
+          return false unless @content.eql?(obj)
+        end
         true
       rescue JsonSpec::MissingPath
         false
       end
 
+      def with_content(content)
+        @content = content
+        self
+      end
+
       def failure_message_for_should
-        %(Expected JSON path "#{@path}")
+        message = %(Expected JSON path "#{@path}")
+        message += %( with content "#{@content}") if @content
+        message
       end
 
       def failure_message_for_should_not
-        %(Expected no JSON path "#{@path}")
+        message = %(Expected no JSON path "#{@path}")
+        message += %( with content "#{@content}") if @content
+        message
       end
 
       def description
-        %(have JSON path "#{@path}")
+        message = %(have JSON path "#{@path}")
+        message += %( with content "#{@content}") if @content
+        message
       end
     end
   end

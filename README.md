@@ -27,7 +27,7 @@ describe User do
     end
 
     it "includes the ID" do
-      user.to_json.should have_json_path("id")
+      user.to_json.should have_json_path("id").with_content(1)
       user.to_json.should have_json_type(Integer).at_path("id")
     end
 
