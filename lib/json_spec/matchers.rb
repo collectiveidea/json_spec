@@ -1,5 +1,6 @@
 require "json_spec/matchers/be_json_eql"
 require "json_spec/matchers/include_json"
+require "json_spec/matchers/include_nested_json"
 require "json_spec/matchers/have_json_path"
 require "json_spec/matchers/have_json_type"
 require "json_spec/matchers/have_json_size"
@@ -12,6 +13,10 @@ module JsonSpec
 
     def include_json(json = nil)
       JsonSpec::Matchers::IncludeJson.new(json)
+    end
+
+    def include_nested_json(json = nil)
+      JsonSpec::Matchers::IncludeNestedJson.new(json)
     end
 
     def have_json_path(path)

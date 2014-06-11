@@ -6,10 +6,11 @@ Easily handle JSON in RSpec and Cucumber
 RSpec
 --------------
 
-json_spec defines five new RSpec matchers:
+json_spec defines six new RSpec matchers:
 
 * `be_json_eql`
 * `include_json`
+# `include_nested_json`
 * `have_json_path`
 * `have_json_type`
 * `have_json_size`
