@@ -10,8 +10,12 @@ module JsonSpec
 
       def matches_nested?(parsed_json)
         case parsed_json
-        when Hash then parsed_json.values.map{|v| exclude_keys(v) }.include?(expected) || test_contained_enumerables(parsed_json)
-        when Array then parsed_json.map{|e| exclude_keys(e) }.include?(expected)       || test_contained_enumerables(parsed_json)
+        when Hash
+          parsed_json.values.map{|v| exclude_keys(v) }.include?(expected) ||
+          test_contained_enumerables(parsed_json)
+        when Array
+          parsed_json.map{|e| exclude_keys(e) }.include?(expected) ||
+          test_contained_enumerables(parsed_json)
         when String then parsed_json.include?(expected)
         else false
         end
@@ -19,14 +23,16 @@ module JsonSpec
 
       def test_contained_enumerables(parsed_json)
         case parsed_json
-        when Hash then parsed_json.values.reduce(false) {|accum, value| accum || test_if_nests(value)}
-        when Array then parsed_json.reduce(false) {|accum, value| accum || test_if_nests(value)}
+        when Hash then test_each(parsed_json.values)
+        when Array then test_each(parsed_json)
         else false
         end
       end
 
-      def test_if_nests(value)
-        value.respond_to?(:each) && matches_nested?(value)
+      def test_each(values)
+        values.map do |value|
+          value.respond_to?(:each) && matches_nested?(value)
+        end.detect {|test| !!test }
       end
 
       def expected
