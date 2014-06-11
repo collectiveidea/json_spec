@@ -41,6 +41,12 @@ describe User do
       user.to_json.should have_json_size(1).at_path("friends")
       user.to_json.should include_json(friend.to_json)
     end
+
+    it "includes user id within response" do
+      new_user = User.create!(first_name: "Catie", last_name: "Richert")
+      users_json = User.page(1).to_json
+      users_json.should include_nested_json("{id: #{new_user.id}}")
+    end
   end
 end
 ```
