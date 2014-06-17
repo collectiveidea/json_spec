@@ -7,12 +7,12 @@ describe JsonSpec::Memory do
 
   it "memorizes strings" do
     JsonSpec.memorize(:key, "value")
-    JsonSpec.memory.should == {:key => "value"}
+    JsonSpec.memory.should == { key: "value" }
   end
 
   it "symbolizes keys" do
     JsonSpec.memorize("key", "value")
-    JsonSpec.memory.should == {:key => "value"}
+    JsonSpec.memory.should == { key: "value" }
   end
 
   it "regurgitates unremembered strings" do
