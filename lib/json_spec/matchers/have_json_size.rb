@@ -19,13 +19,15 @@ module JsonSpec
         self
       end
 
-      def failure_message_for_should
+      def failure_message
         message_with_path("Expected JSON value size to be #{@expected}, got #{@actual}")
       end
+      alias :failure_message_for_should :failure_message
 
-      def failure_message_for_should_not
+      def failure_message_when_negated
         message_with_path("Expected JSON value size to not be #{@expected}, got #{@actual}")
       end
+      alias :failure_message_for_should_not :failure_message_when_negated
 
       def description
         message_with_path(%(have JSON size "#{@expected}"))
