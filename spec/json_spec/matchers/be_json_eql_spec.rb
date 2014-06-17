@@ -28,8 +28,8 @@ describe JsonSpec::Matchers::BeJsonEql do
   it "ignores excluded-by-default hash keys" do
     JsonSpec.excluded_keys.should_not be_empty
 
-    actual = expected = {"json" => "spec"}
-    JsonSpec.excluded_keys.each{|k| actual[k] = k }
+    actual = expected = { "json" => "spec" }
+    JsonSpec.excluded_keys.each { |k| actual[k] = k }
     actual.to_json.should be_json_eql(expected.to_json)
   end
 

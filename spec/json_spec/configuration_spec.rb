@@ -16,12 +16,12 @@ describe JsonSpec::Configuration do
   end
 
   it "excludes custom keys via block" do
-    JsonSpec.configure{|c| c.exclude_keys("token") }
+    JsonSpec.configure { |c| c.exclude_keys("token") }
     JsonSpec.excluded_keys.should == ["token"]
   end
 
   it "excludes custom keys via block setter" do
-    JsonSpec.configure{|c| c.excluded_keys = ["token"] }
+    JsonSpec.configure { |c| c.excluded_keys = ["token"] }
     JsonSpec.excluded_keys.should == ["token"]
   end
 

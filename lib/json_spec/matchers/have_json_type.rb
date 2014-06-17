@@ -10,7 +10,7 @@ module JsonSpec
 
       def matches?(json)
         @ruby = parse_json(json, @path)
-        @classes.any?{|c| c === @ruby }
+        @classes.any? { |c| c === @ruby }
       end
 
       def at_path(path)
@@ -36,7 +36,7 @@ module JsonSpec
         def type_to_classes(type)
           case type
           when Class then [type]
-          when Array then type.map{|t| type_to_classes(t) }.flatten
+          when Array then type.map { |t| type_to_classes(t) }.flatten
           else
             case type.to_s.downcase
             when "boolean"     then [TrueClass, FalseClass]
