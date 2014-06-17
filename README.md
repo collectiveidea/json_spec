@@ -1,10 +1,13 @@
-json_spec [![Build Status](https://secure.travis-ci.org/collectiveidea/json_spec.png)](http://travis-ci.org/collectiveidea/json_spec) [![Dependency Status](https://gemnasium.com/collectiveidea/json_spec.png)](https://gemnasium.com/collectiveidea/json_spec) [![Code Climate](https://codeclimate.com/github/collectiveidea/json_spec.png)](https://codeclimate.com/github/collectiveidea/json_spec)
-=========
+# json_spec
 
 Easily handle JSON in RSpec and Cucumber
 
-RSpec
---------------
+[![Gem Version](https://img.shields.io/gem/v/json_spec.svg?style=flat)](http://rubygems.org/gems/json_spec)
+[![Build Status](https://img.shields.io/travis/collectiveidea/json_spec/master.svg?style=flat)](https://travis-ci.org/collectiveidea/json_spec)
+[![Code Climate](https://img.shields.io/codeclimate/github/collectiveidea/json_spec.svg?style=flat)](https://codeclimate.com/github/collectiveidea/json_spec)
+[![Dependency Status](https://img.shields.io/gemnasium/collectiveidea/json_spec.svg?style=flat)](https://gemnasium.com/collectiveidea/json_spec)
+
+## RSpec
 
 json_spec defines five new RSpec matchers:
 
@@ -101,8 +104,7 @@ hash keys and array indexes. For instance, with the following JSON:
 
 We could access the first friend's first name with the path `"friends/0/first_name"`.
 
-Cucumber
---------
+## Cucumber
 
 json_spec provides Cucumber steps that utilize its RSpec matchers and that's where json_spec really
 shines. This is perfect for testing your app's JSON API.
@@ -316,8 +318,7 @@ Check out the [specs](https://github.com/collectiveidea/json_spec/blob/master/sp
 and [features](https://github.com/collectiveidea/json_spec/blob/master/features) to see all the
 various ways you can use json_spec.
 
-Contributing
-------------
+## Contributing
 
 If you come across any issues, please [tell us](https://github.com/collectiveidea/json_spec/issues).
 Pull requests (with tests) are appreciated. No pull request is too small. Please help with:
@@ -333,8 +334,7 @@ Pull requests (with tests) are appreciated. No pull request is too small. Please
 
 If you report a bug and don't include a fix, please include a failing test.
 
-Copyright
----------
+## Copyright
 
 Copyright © 2011 Steve Richert
 
