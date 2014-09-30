@@ -36,3 +36,21 @@ Feature: Sizes
     Then the JSON at "one" should have 1 entry
     And the JSON at "two" should have 2 values
     And the JSON at "three" should have 3 numbers
+
+
+  Scenario: A null value returned instead of an empty array
+    Given the JSON is:
+    """
+      {
+        "id": null,
+        "array_with_null" : [null],
+        "value_as_null" : null,
+        "non_null_value" : 12345
+      }
+      """
+    When I get the JSON
+    Then the JSON at "array_with_null" should have 1 entry
+    And the JSON at "value_as_null" should not have 1 entry
+
+    And the JSON at "value_as_null" should have 0 entry
+    And the JSON at "non_null_value" should have 1 entry
