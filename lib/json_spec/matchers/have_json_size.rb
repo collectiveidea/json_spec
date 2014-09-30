@@ -10,8 +10,12 @@ module JsonSpec
 
       def matches?(json)
         ruby = parse_json(json, @path)
-        @actual = Enumerable === ruby ? ruby.size : 1
-        @actual == @expected
+        if ruby.nil? && !@expected.nil?
+          false
+        else
+          @actual = Enumerable === ruby ? ruby.size : 1
+          @actual == @expected
+        end
       end
 
       def at_path(path)
