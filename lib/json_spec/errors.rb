@@ -31,4 +31,16 @@ module JsonSpec
       "No JSON file at #{path}"
     end
   end
+
+  class EnumerableExpected < Error
+    attr_reader :actual_value
+
+    def initialize(actual_value)
+      @actual_value = actual_value
+    end
+
+    def to_s
+      "Enumerable expected, got #{actual_value.inspect}"
+    end
+  end
 end

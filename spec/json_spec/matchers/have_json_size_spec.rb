@@ -49,13 +49,13 @@ describe JsonSpec::Matchers::HaveJsonSize do
 
   it "provides an error when parsing nil" do
     matcher = have_json_size(0).at_path("json")
-    expect { matcher.matches?(%({"id":1,"json":null})) }.to
-      raise_error(JsonSpec::EnumerableExpected, "Enumerable expected, got nil.")
+    expect { matcher.matches?(%({"id":1,"json":null})) }.to raise_error(JsonSpec::EnumerableExpected,
+                                                                          "Enumerable expected, got nil")
   end
 
-  it "provides an error when parsing nil" do
+  it "provides an error when parsing non-enumerables" do
     matcher = have_json_size(0).at_path("json")
-    expect { matcher.matches?(%({"id":1,"json":12345})) }.to
-      raise_error(JsonSpec::EnumerableExpected, "Enumerable expected, got 12345.")
+    expect { matcher.matches?(%({"id":1,"json":12345})) }.to raise_error(JsonSpec::EnumerableExpected,
+                                                                           "Enumerable expected, got 12345")
   end
 end
