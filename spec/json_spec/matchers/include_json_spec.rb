@@ -71,6 +71,18 @@ describe JsonSpec::Matchers::IncludeJson do
     matcher.description.should == %(include JSON at path "json/0")
   end
 
+  it "provides a useful failure message for should" do
+    matcher = include_json(%([4,5,6]))
+    matcher.matches?(%([1,2,3]))
+    matcher.failure_message_for_should.should == "Expected [1,2,3] to include [4,5,6]"
+  end
+
+  it "provides a useful failure message for should not" do
+    matcher = include_json(%(3))
+    matcher.matches?(%([1,2,3]))
+    matcher.failure_message_for_should_not.should == "Expected [1,2,3] to not include 3"
+  end
+
   it "raises an error when not given expected JSON" do
     expect{ %([{"id":1,"two":3}]).should include_json }.to raise_error
   end
