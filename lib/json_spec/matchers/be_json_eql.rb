@@ -3,6 +3,7 @@ module JsonSpec
     class BeJsonEql
       include JsonSpec::Helpers
       include JsonSpec::Exclusion
+      include JsonSpec::Indifference
       include JsonSpec::Messages
 
       attr_reader :expected, :actual
@@ -42,6 +43,11 @@ module JsonSpec
         self
       end
 
+      def order_indifferent(state = true)
+        toggle_indifference(state)
+        self
+      end
+
       def failure_message
         message_with_path("Expected equivalent JSON")
       end
@@ -58,7 +64,7 @@ module JsonSpec
 
       private
         def scrub(json, path = nil)
-          generate_normalized_json(exclude_keys(parse_json(json, path))).chomp + "\n"
+          generate_normalized_json(indifferize(exclude_keys(parse_json(json, path)))).chomp + "\n"
         end
     end
   end
