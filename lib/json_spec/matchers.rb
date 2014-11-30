@@ -2,6 +2,7 @@ require "json_spec/matchers/be_json_eql"
 require "json_spec/matchers/include_json"
 require "json_spec/matchers/have_json_path"
 require "json_spec/matchers/have_json_type"
+require "json_spec/matchers/have_json_value"
 require "json_spec/matchers/have_json_size"
 
 module JsonSpec
@@ -20,6 +21,10 @@ module JsonSpec
 
     def have_json_type(type)
       JsonSpec::Matchers::HaveJsonType.new(type)
+    end
+
+    def have_json_value(value)
+      JsonSpec::Matchers::HaveJsonValue.new(value)
     end
 
     def have_json_size(size)
