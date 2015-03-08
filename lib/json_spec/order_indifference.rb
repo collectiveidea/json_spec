@@ -1,8 +1,8 @@
 module JsonSpec
-  module Indifference
+  module OrderIndifference
     extend self
 
-    def toggle_indifference( toggle )
+    def toggle_order_indifference(toggle)
       @indifferent = !!toggle
     end
 
@@ -11,7 +11,7 @@ module JsonSpec
 
       case ruby
       when Hash
-        ruby.sort.inject({}) do |hash, (key, value)|
+        ruby.inject({}) do |hash, (key, value)|
           hash[key] = indifferize(value)
           hash
         end

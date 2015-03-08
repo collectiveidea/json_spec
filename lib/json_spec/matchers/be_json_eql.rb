@@ -3,7 +3,7 @@ module JsonSpec
     class BeJsonEql
       include JsonSpec::Helpers
       include JsonSpec::Exclusion
-      include JsonSpec::Indifference
+      include JsonSpec::OrderIndifference
       include JsonSpec::Messages
 
       attr_reader :expected, :actual
@@ -43,8 +43,8 @@ module JsonSpec
         self
       end
 
-      def order_indifferent(state = true)
-        toggle_indifference(state)
+      def in_any_order(state = true)
+        toggle_order_indifference(state)
         self
       end
 
