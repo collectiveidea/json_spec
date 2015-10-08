@@ -9,7 +9,7 @@ module JsonSpec
     end
 
     def remember(json)
-      memory.empty? ? json : json % memory
+      (memory.empty? or json.is_a?(Numeric)) ? json : json % memory
     end
 
     def forget

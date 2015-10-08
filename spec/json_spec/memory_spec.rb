@@ -24,6 +24,11 @@ describe JsonSpec::Memory do
     JsonSpec.remember("foo%{bar}").should == "foobaz"
   end
 
+  it "ignores numeric types" do
+    JsonSpec.memorize(:bar, "baz")
+    JsonSpec.remember(10).should == 10
+  end
+
   it "forgets" do
     JsonSpec.memorize(:key, "value")
     JsonSpec.forget
