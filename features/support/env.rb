@@ -1,4 +1,4 @@
-$: << File.expand_path("../../../lib", __FILE__)
+$LOAD_PATH << ::File.expand_path('../../../lib', __FILE__)
 
 require "json_spec/cucumber"
 
