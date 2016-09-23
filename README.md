@@ -312,6 +312,37 @@ You can also remember JSON inline:
 Then the JSON response at "0/first_name" should be %{FIRST_NAME}
 ```
 
+If the value should be parsed before memorizing, "parsed" modifier can be used.
+For example:
+
+Response data:
+```json
+[
+  {
+    "uuid": "ad796a4b",
+    "url": "/entities/ad796a4b"
+  }
+]
+```
+
+```cucumber
+Given I keep the JSON at "0/uuid" as parsed "UUID"
+```
+
+Now `%{UUID}` will be replaced with `ad796a4b` instead of `"ad796a4b"`, so it can be interpolated into the string:
+
+```cucumber
+Then the JSON should be:
+"""
+[
+  {
+    "uuid": "%{UUID}",
+    "url": "/entities/%{UUID}"
+  }
+]
+"""
+```
+
 ### More
 
 Check out the [specs](https://github.com/collectiveidea/json_spec/blob/master/spec)
