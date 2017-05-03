@@ -6,6 +6,7 @@ module JsonSpec
 
       def initialize(type)
         @classes = type_to_classes(type)
+        @path = nil
       end
 
       def matches?(json)

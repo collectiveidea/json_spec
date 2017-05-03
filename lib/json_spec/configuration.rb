@@ -4,6 +4,8 @@ module JsonSpec
   module Configuration
     DEFAULT_EXCLUDED_KEYS = %w(id created_at updated_at)
 
+    attr_accessor :directory
+
     def configure(&block)
       instance_eval(&block)
     end
@@ -20,13 +22,6 @@ module JsonSpec
       self.excluded_keys = keys
     end
 
-    def directory
-      @directory
-    end
-
-    def directory=(directory)
-      @directory = directory
-    end
 
     def reset
       instance_variables.each { |ivar| remove_instance_variable(ivar) }

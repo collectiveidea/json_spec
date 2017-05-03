@@ -5,11 +5,11 @@ describe JsonSpec::Helpers do
 
   context "parse_json" do
     it "parses JSON documents" do
-      parse_json(%({"json":["spec"]})).should == {"json" => ["spec"]}
+      parse_json(%({"json":["spec"]})).should eq({"json" => ["spec"]})
     end
 
     it "parses JSON values" do
-      parse_json(%("json_spec")).should == "json_spec"
+      parse_json(%("json_spec")).should eq "json_spec"
     end
 
     it "raises a parser error for invalid JSON" do
@@ -18,8 +18,8 @@ describe JsonSpec::Helpers do
 
     it "parses at a path if given" do
       json = %({"json":["spec"]})
-      parse_json(json, "json").should == ["spec"]
-      parse_json(json, "json/0").should == "spec"
+      parse_json(json, "json").should eq ["spec"]
+      parse_json(json, "json/0").should eq "spec"
     end
 
     it "raises an error for a missing path" do
@@ -31,7 +31,7 @@ describe JsonSpec::Helpers do
 
     it "parses at a numeric string path" do
       json = %({"1":"two"})
-      parse_json(%({"1":"two"}), "1").should == "two"
+      parse_json(json, "1").should eq "two"
     end
   end
 
@@ -44,19 +44,19 @@ describe JsonSpec::Helpers do
   ]
 }
       JSON
-      normalize_json(%({"json":["spec"]})).should == normalized.chomp
+      normalize_json(%({"json":["spec"]})).should eq normalized.chomp
     end
 
     it "normalizes at a path" do
-      normalize_json(%({"json":["spec"]}), "json/0").should == %("spec")
+      normalize_json(%({"json":["spec"]}), "json/0").should eq %("spec")
     end
 
     it "accepts a JSON value" do
-      normalize_json(%("json_spec")).should == %("json_spec")
+      normalize_json(%("json_spec")).should eq %("json_spec")
     end
 
     it "normalizes JSON values" do
-      normalize_json(%(1e+1)).should == %(10.0)
+      normalize_json(%(1e+1)).should eq %(10.0)
     end
   end
 
@@ -69,11 +69,11 @@ describe JsonSpec::Helpers do
   ]
 }
       JSON
-      generate_normalized_json({"json" => ["spec"]}).should == normalized.chomp
+      generate_normalized_json({"json" => ["spec"]}).should eq normalized.chomp
     end
 
     it "generates a normalized JSON value" do
-      generate_normalized_json(nil).should == %(null)
+      generate_normalized_json(nil).should eq %(null)
     end
   end
 
@@ -84,12 +84,12 @@ describe JsonSpec::Helpers do
 
     it "returns JSON when the file exists" do
       JsonSpec.directory = files_path
-      load_json("one.json").should == %({"value":"from_file"})
+      load_json("one.json").should eq %({"value":"from_file"})
     end
 
     it "ignores extra slashes" do
       JsonSpec.directory = "/#{files_path}/"
-      load_json("one.json").should == %({"value":"from_file"})
+      load_json("one.json").should eq %({"value":"from_file"})
     end
 
     it "raises an error when the file doesn't exist" do
@@ -104,8 +104,8 @@ describe JsonSpec::Helpers do
 
     it "finds nested files" do
       JsonSpec.directory = files_path
-      load_json("project/one.json").should == %({"nested":"inside_folder"})
-      load_json("project/version/one.json").should == %({"nested":"deeply"})
+      load_json("project/one.json").should eq %({"nested":"inside_folder"})
+      load_json("project/version/one.json").should eq %({"nested":"deeply"})
     end
   end
 end

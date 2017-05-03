@@ -6,6 +6,7 @@ module JsonSpec
 
       def initialize(size)
         @expected = size
+        @path = nil
       end
 
       def matches?(json)

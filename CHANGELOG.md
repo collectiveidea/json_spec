@@ -1,6 +1,7 @@
 ## Unreleased (master)
 
 - Added Changelog
+- Fix RSpec warnings for uninitialized instance variables on matchers [#78](https://github.com/collectiveidea/json_spec/pull/78)
 
 ## Version 1.1.4
 
