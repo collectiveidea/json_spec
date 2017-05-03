@@ -99,7 +99,9 @@ describe JsonSpec::Matchers::BeJsonEql do
   end
 
   it "raises an error when not given expected JSON" do
-    expect{ %({"id":1,"json":"spec"}).should be_json_eql }.to raise_error
+    expect{ %({"id":1,"json":"spec"}).should be_json_eql }.to raise_error do |error|
+      error.message.should == "Expected equivalent JSON not provided"
+    end
   end
 
   it "matches file contents" do

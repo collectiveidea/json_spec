@@ -84,7 +84,9 @@ describe JsonSpec::Matchers::IncludeJson do
   end
 
   it "raises an error when not given expected JSON" do
-    expect{ %([{"id":1,"two":3}]).should include_json }.to raise_error
+    expect{ %([{"id":1,"two":3}]).should include_json }.to raise_error do |error|
+      error.message.should == "Expected included JSON not provided"
+    end
   end
 
   it "matches file contents" do
