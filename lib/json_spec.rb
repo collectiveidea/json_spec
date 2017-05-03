@@ -1,5 +1,4 @@
 require "json"
-require "rspec"
 require "json_spec/errors"
 require "json_spec/configuration"
 require "json_spec/exclusion"

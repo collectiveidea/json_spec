@@ -312,11 +312,85 @@ You can also remember JSON inline:
 Then the JSON response at "0/first_name" should be %{FIRST_NAME}
 ```
 
+MiniTest
+--------
+
+json_spec matchers can be used in MiniTest tests. To use json_spec in your tests
+you must use the minitest-matchers gem. In your `test_helper.rb` you must:
+
+```ruby
+require "minitest/autorun"
+require "minitest/matchers"
+require "json_spec"
+```
+
+The matchers are now available in MiniTest's spec DSL as follows:
+
+```ruby
+describe User, :to_json do
+  let(:user)  { User.create! first_name: "Steve", last_name: "Richert" }
+  let(:names) { %({"first_name":"Steve","last_name":"Richert"}) }
+
+  it "includes names" do
+    user.to_json.must be_json_eql(names).excluding("friends")
+  end
+
+  it "includes the ID" do
+    user.to_json.must have_json_path("id")
+    user.to_json.must have_json_type(Integer).at_path("id")
+  end
+
+  it "includes friends" do
+    user.to_json.must have_json_size(0).at_path("friends")
+
+    friend = User.create! first_name: "Catie", last_name: "Richert"
+    user.friends << friend
+
+    user.to_json.must have_json_size(1).at_path("friends")
+    user.to_json.must include_json(friend.to_json).at_path("friends")
+  end
+end
+```
+
+The matchers are also available through MiniTest's classic assertions as follows:
+
+```ruby
+class UserToJsonTest < MiniTest::Test
+  def setup
+    @user = User.create! first_name: "Steve", last_name: "Richert"
+    @names = %({"first_name":"Steve","last_name":"Richert"})
+  end
+
+  def test_includes_names
+    assert_must be_json_eql(@names).excluding("friends"), @user.to_json
+  end
+
+  def test_includes_id
+    assert_have_json_path @user.to_json, "id"
+    assert_must have_json_path("id"), @user.to_json
+
+    assert_must have_json_type(Integer).at_path("id"), @user.to_json
+  end
+
+  def test_includes_friends
+    assert_must have_json_size(0).at_path("friends"), @user.to_json
+
+    friend = User.create! first_name: "Catie", last_name: "Richert"
+    @user.friends << friend
+
+    assert_must have_json_size(1).at_path("friends"), @user.to_json
+    assert_must include_json(friend.to_json).at_path("friends"), @user.to_json
+  end
+end
+```
+
 ### More
 
-Check out the [specs](https://github.com/collectiveidea/json_spec/blob/master/spec)
-and [features](https://github.com/collectiveidea/json_spec/blob/master/features) to see all the
-various ways you can use json_spec.
+Check out the different test suites to see all the various ways you can use json_spec:
+
+* [RSpec specs](https://github.com/collectiveidea/json_spec/blob/master/spec)
+* [MiniTest tests](https://github.com/collectiveidea/json_spec/blob/master/test)
+* [Cucumber features](https://github.com/collectiveidea/json_spec/blob/master/features)
 
 ## Contributing
 
