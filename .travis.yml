@@ -11,9 +11,11 @@ matrix:
   allow_failures:
     - rvm: ruby-head
     - rvm: "2.0"
+    - rvm: "2.1"
 rvm:
   - "2.0"
   - "2.1"
-  - "2.2"
+  - "2.2.7"
   - "2.3.4"
+  - "2.4.1"
   - ruby-head
