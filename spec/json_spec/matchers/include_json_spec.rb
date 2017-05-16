@@ -93,4 +93,10 @@ describe JsonSpec::Matchers::IncludeJson do
     JsonSpec.directory = files_path
     %({"one":{"value":"from_file"},"four":{"five":6}}).should include_json.from_file("one.json")
   end
+
+  it "matches subset hash included in current position" do
+    json = %({"one": 1, "two": 2, "three": {"foo": 1, "bar": 2, "baz": 3}})
+    json.should include_json(%({"one": 1, "two": 2}))
+    json.should include_json(%({"foo": 1, "baz": 3})).at_path("three")
+  end
 end
