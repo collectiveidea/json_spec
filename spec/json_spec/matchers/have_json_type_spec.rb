@@ -55,9 +55,10 @@ describe JsonSpec::Matchers::HaveJsonType do
 
   it "provides a failure message for negation" do
     matcher = have_json_type(Numeric)
-    matcher.matches?(%(10))
-    matcher.failure_message_when_negated.should   eq "Expected JSON value type to not be Numeric, got Fixnum"
-    matcher.failure_message_for_should_not.should eq "Expected JSON value type to not be Numeric, got Fixnum" # RSpec 2 interface
+    matcher.matches?(%(10.0))
+
+    matcher.failure_message_when_negated.should   eq "Expected JSON value type to not be Numeric, got Float"
+    matcher.failure_message_for_should_not.should eq "Expected JSON value type to not be Numeric, got Float" # RSpec 2 interface
   end
 
   it "provides a description message" do
