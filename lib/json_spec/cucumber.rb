@@ -6,8 +6,11 @@ After do
   JsonSpec.forget
 end
 
-When /^(?:I )?keep the (?:JSON|json)(?: response)?(?: at "(.*)")? as "(.*)"$/ do |path, key|
-  JsonSpec.memorize(key, normalize_json(last_json, path))
+When /^(?:I )?keep the (?:JSON|json)(?: response)?(?: at "(.*)")? as( parsed)? "(.*)"$/ do |path, parsed, key|
+  json = normalize_json(last_json, path)
+  json = parse_json(json) if parsed
+
+  JsonSpec.memorize(key, json)
 end
 
 Then /^the (?:JSON|json)(?: response)?(?: at "(.*)")? should( not)? be:$/ do |path, negative, json|

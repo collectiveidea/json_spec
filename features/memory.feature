@@ -183,6 +183,26 @@ Feature: Memory
       }
       """
 
+  Scenario: Parsed value
+    Given the JSON is:
+      """
+      {
+        "uuid": "ad796a4b",
+        "url": "/entities/ad796a4b"
+      }
+      """
+    And I get the JSON
+
+    When I keep the JSON at "uuid" as parsed "UUID"
+    Then the JSON at "uuid" should be "%{UUID}"
+    And the JSON should be:
+    """
+    {
+      "uuid": "%{UUID}",
+      "url": "/entities/%{UUID}"
+    }
+    """
+
   Scenario: Table format
     When I keep the JSON at "string" as "STRING"
     And I keep the JSON at "integer" as "INTEGER"
