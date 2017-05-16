@@ -9,10 +9,11 @@ Easily handle JSON in RSpec and Cucumber
 
 ## RSpec
 
-json_spec defines five new RSpec matchers:
+json_spec defines six new RSpec matchers:
 
 * `be_json_eql`
 * `include_json`
+# `include_nested_json`
 * `have_json_path`
 * `have_json_type`
 * `have_json_size`
@@ -42,6 +43,12 @@ describe User do
 
       user.to_json.should have_json_size(1).at_path("friends")
       user.to_json.should include_json(friend.to_json)
+    end
+
+    it "includes user id within response" do
+      new_user = User.create!(first_name: "Catie", last_name: "Richert")
+      users_json = User.page(1).to_json
+      users_json.should include_nested_json("{id: #{new_user.id}}")
     end
   end
 end
