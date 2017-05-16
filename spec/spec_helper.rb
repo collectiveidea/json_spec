@@ -1,3 +1,8 @@
+if ENV["CODECLIMATE_REPO_TOKEN"]
+  require "simplecov"
+  SimpleCov.start
+end
+
 require "json_spec"
 
 RSpec.configure do |config|
