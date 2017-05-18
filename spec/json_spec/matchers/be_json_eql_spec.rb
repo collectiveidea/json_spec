@@ -17,12 +17,32 @@ describe JsonSpec::Matchers::BeJsonEql do
     %(["json","spec"]).should_not be_json_eql(%(["spec","json"]))
   end
 
+  it "matches out-of-order arrays when chained with in_any_order" do
+    %(["json","spec"]).should be_json_eql(%(["spec","json"])).in_any_order
+  end
+
+  it "matches out-of-order hashes when chained with in_any_order" do
+    %({"laser":"lemon","json":"spec"}).should be_json_eql(%({"json":"spec","laser":"lemon"})).in_any_order
+  end
+
+  it "doesn't match out-of-order arrays when chained with in_any_order if passed false" do
+    %(["json","spec"]).should_not be_json_eql(%(["spec","json"])).in_any_order(false)
+  end
+
+  it "matches complex nested out-of-order arrays when chained with in_any_order" do
+    %({"json":[{"spec":4,"laser":[{"id":2,"lemon":"a"},{"id":5,"lemon":"b"}]},{"spec":9,"laser":[{"id":3,"lemon":"c"},{"id":1,"lemon":"d"}]}]}).should be_json_eql(%({"json":[{"laser":[{"lemon":"d","id":1},{"lemon":"c","id":3}],"spec":9},{"laser":[{"lemon":"b","id":5},{"lemon":"a","id":2}],"spec":4}]})).in_any_order
+  end
+
   it "matches valid JSON values, yet invalid JSON documents" do
     %("json_spec").should be_json_eql(%("json_spec"))
   end
 
   it "matches at a path" do
     %({"json":["spec"]}).should be_json_eql(%("spec")).at_path("json/0")
+  end
+
+  it "matches out-of-order arrays at a path when chained with in_any_order" do
+    %({"json":[{"spec":[4,2,3,1,5]}]}).should be_json_eql(%([1,2,3,4,5])).at_path("json/0/spec").in_any_order
   end
 
   it "ignores excluded-by-default hash keys" do
@@ -64,6 +84,11 @@ describe JsonSpec::Matchers::BeJsonEql do
   it "excludes extra hash keys given as symbols" do
     JsonSpec.excluded_keys = []
     %({"id":1,"json":"spec"}).should be_json_eql(%({"id":2,"json":"spec"})).excluding(:id)
+  end
+
+  it "excludes extra hash keys given as symbols and matches out-of-order arrays when chained with in_any_order" do
+    JsonSpec.excluded_keys = []
+    %([{"id":1,"json":"spec"},{"id":4,"json":"laser"}]).should be_json_eql(%([{"id":3,"json":"laser"},{"id":2,"json":"spec"}])).excluding(:id).in_any_order
   end
 
   it "excludes multiple keys" do
