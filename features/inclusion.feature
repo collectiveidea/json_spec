@@ -151,4 +151,4 @@ Feature: Inclusion
 
   Scenario: Nested exclusions
     When I get the JSON
-    Then the JSON should include {"key":"value"}
+    Then the JSON should include {"id": 3, "key":"value"}

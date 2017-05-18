@@ -97,6 +97,7 @@ Feature: Equivalence
           "json",
           "spec"
         ],
+        "created_at": "2000-01-01 00:00:00",
         "empty_array": [
 
         ],
@@ -107,11 +108,13 @@ Feature: Equivalence
         "hash": {
           "json": "spec"
         },
+        "id": 2,
         "integer": 10,
         "negative": -10,
         "null": null,
         "string": "json_spec",
-        "true": true
+        "true": true,
+        "updated_at": "2006-06-06 06:06:06"
       }
       """
 

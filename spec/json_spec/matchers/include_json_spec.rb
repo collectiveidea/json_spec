@@ -56,7 +56,7 @@ describe JsonSpec::Matchers::IncludeJson do
   end
 
   it "ignores excluded keys" do
-    %([{"id":1,"two":3}]).should include_json(%({"two":3}))
+    %([{"id":1,"two":3}]).should include_json(%({"id":2,"two":3}))
   end
 
   it "provides a description message" do
