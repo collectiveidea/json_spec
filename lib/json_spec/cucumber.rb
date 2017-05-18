@@ -34,6 +34,16 @@ Then /^the (?:JSON|json)(?: response)?(?: at "(.*)")? should( not)? be (".*"|\-?
   end
 end
 
+Then /^the (?:JSON|json)(?: response)?(?: at "(.*)")? should( not)? be one of ((?:(?:".*"|\-?\d+(?:\.\d+)?(?:[eE][\+\-]?\d+)?|true|false|null)\,?\s*)+)$/ do |path, negative, value|
+  jsons = value.split(",")
+
+  if negative
+    last_json.should_not be_one_of(*jsons.map {|e| JsonSpec.remember(e) }).at_path(path)
+  else
+    last_json.should be_one_of(*jsons.map {|e| JsonSpec.remember(e) }).at_path(path)
+  end
+end
+
 Then /^the (?:JSON|json)(?: response)?(?: at "(.*)")? should( not)? include:$/ do |path, negative, json|
   if negative
     last_json.should_not include_json(JsonSpec.remember(json)).at_path(path)

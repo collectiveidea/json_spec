@@ -9,13 +9,14 @@ Easily handle JSON in RSpec and Cucumber
 
 ## RSpec
 
-json_spec defines five new RSpec matchers:
+json_spec defines six new RSpec matchers:
 
 * `be_json_eql`
 * `include_json`
 * `have_json_path`
 * `have_json_type`
 * `have_json_size`
+* `be_one_of`
 
 The new matchers could be used in RSpec as follows:
 
@@ -235,6 +236,18 @@ Then the JSON should have 4 whatevers
 ```
 
 _All instances of "should" above could be followed by "not" and all instances of "JSON" could be downcased and/or followed by "response."_
+
+### Probability Testing
+
+Some apps's response, like game apps API server, have probability and you want to test them.
+json_spec provides the way to do that easily.
+
+Each expected value should be single json value like Integer, String, Bool. Array and Hash are not supported.
+
+```cucumber
+Then the JSON at "path" should be one of 1, 10, 100
+Then the JSON at "path" should be one of "rare", "super rare"
+```
 
 ### Table Format
 
