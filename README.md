@@ -9,19 +9,20 @@ Easily handle JSON in RSpec and Cucumber
 
 ## RSpec
 
-json_spec defines five new RSpec matchers:
+json_spec defines six new RSpec matchers:
 
 * `be_json_eql`
 * `include_json`
 * `have_json_path`
 * `have_json_type`
 * `have_json_size`
+* `have_json_value`
 
 The new matchers could be used in RSpec as follows:
 
 ```ruby
 describe User do
-  let(:user){ User.create!(first_name: "Steve", last_name: "Richert") }
+  let(:user) { User.create!(first_name: "Steve", last_name: "Richert") }
 
   context "#to_json" do
     it "includes names" do
@@ -32,6 +33,10 @@ describe User do
     it "includes the ID" do
       user.to_json.should have_json_path("id")
       user.to_json.should have_json_type(Integer).at_path("id")
+    end
+
+    it "includes a generated friendly ID" do
+      user.to_json.should have_json_value(user.friendly_id).at_path("external_id")
     end
 
     it "includes friends" do
