@@ -26,7 +26,7 @@ Then /^the (?:JSON|json)(?: response)?(?: at "(.*)")? should( not)? be file "(.+
   end
 end
 
-Then /^the (?:JSON|json)(?: response)?(?: at "(.*)")? should( not)? be (".*"|\-?\d+(?:\.\d+)?(?:[eE][\+\-]?\d+)?|\[.*\]|%?\{.*\}|true|false|null)$/ do |path, negative, value|
+Then /^the (?:JSON|json)(?: response)?(?: at "(.*)")? should( not)? be (".*"|<.*>|\-?\d+(?:\.\d+)?(?:[eE][\+\-]?\d+)?|\[.*\]|%?\{.*\}|true|false|null)$/ do |path, negative, value|
   if negative
     last_json.should_not be_json_eql(JsonSpec.remember(value)).at_path(path)
   else
@@ -50,7 +50,7 @@ Then /^the (?:JSON|json)(?: response)?(?: at "(.*)")? should( not)? include file
   end
 end
 
-Then /^the (?:JSON|json)(?: response)?(?: at "(.*)")? should( not)? include (".*"|\-?\d+(?:\.\d+)?(?:[eE][\+\-]?\d+)?|\[.*\]|%?\{.*\}|true|false|null)$/ do |path, negative, value|
+Then /^the (?:JSON|json)(?: response)?(?: at "(.*)")? should( not)? include (".*"|<.*>|\-?\d+(?:\.\d+)?(?:[eE][\+\-]?\d+)?|\[.*\]|%?\{.*\}|true|false|null)$/ do |path, negative, value|
   if negative
     last_json.should_not include_json(JsonSpec.remember(value)).at_path(path)
   else
