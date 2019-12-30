@@ -1,6 +1,7 @@
 module JsonSpec
   module Matchers
     class HaveJsonPath
+      include RSpec::Matchers::Composable
       include JsonSpec::Helpers
 
       def initialize(path)

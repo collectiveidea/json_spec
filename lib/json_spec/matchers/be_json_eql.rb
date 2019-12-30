@@ -1,6 +1,7 @@
 module JsonSpec
   module Matchers
     class BeJsonEql
+      include RSpec::Matchers::Composable
       include JsonSpec::Helpers
       include JsonSpec::Exclusion
       include JsonSpec::Messages
