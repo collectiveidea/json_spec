@@ -1,6 +1,7 @@
 module JsonSpec
   module Matchers
     class HaveJsonType
+      include RSpec::Matchers::Composable
       include JsonSpec::Helpers
       include JsonSpec::Messages
 
